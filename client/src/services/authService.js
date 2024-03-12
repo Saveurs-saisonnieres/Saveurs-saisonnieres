@@ -41,8 +41,36 @@ async function LogoutFetch() {
   }
 }
 
+async function EditPasswordFetch(password, confirmPassword, resetPasswordToken) {
+  try {
+    const response = await axios.patch(`${API_URL}/password`, {
+      user: {
+        reset_password_token: resetPasswordToken,
+        password: password,
+        password_confirmation: confirmPassword
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to edit password: ' + error.message);
+  }
+}
+async function ResetPasswordFetch(email) {
+  try {
+    const response = await axios.post(`${API_URL}/password`, { 
+      user: { 
+        email: email 
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to reset password: ' + error.message);
+  }
+}
 export {
   RegisterFetch,
   LoginFetch,
-  LogoutFetch
+  LogoutFetch,
+  EditPasswordFetch,
+  ResetPasswordFetch
 };

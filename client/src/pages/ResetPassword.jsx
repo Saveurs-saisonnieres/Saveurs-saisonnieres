@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
-import { API_URL } from '../constants';
 
+
+import { ResetPasswordFetch } from '../services/authService';
 function ResetPasswordForm() {
   const [email, setEmail] = useState('');
 
@@ -13,13 +13,14 @@ function ResetPasswordForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}/`, { email });
+      const response = await ResetPasswordFetch(email);
       console.log(response.data);
     } catch (error) {
       console.error('Failed to reset password:', error.message);
       
     }
   };
+
 
   return (
     <Form onSubmit={handleSubmit}>
