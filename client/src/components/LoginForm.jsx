@@ -1,18 +1,23 @@
+import Cookies from "js-cookie";
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { LoginFetch } from '../services/authService';
-import { useAtom } from "jotai";
-import { authAtom } from "../atoms/authAtom";
-import { useEffect } from 'react';
-import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../features/authSlice";
+
+
 export default function LoginFrom() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const [, setAuth] = useAtom(authAtom);
+
+  const dispatch = useDispatch();
+  const tokenState = useSelector((state) => state.auth);
+  console.log(tokenState.token);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,17 +27,15 @@ export default function LoginFrom() {
     }));
   };
 
-  useEffect(() => {
-  }, [formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data, authorizationHeader } = await LoginFetch(formData.email, formData.password);
-      const token = authorizationHeader; 
-      setAuth({ bearerToken: token });
+      const { data, headers } = await LoginFetch(formData.email, formData.password);
+      const token = headers.authorization; 
       Cookies.set('token', token);
-      console.log(data)
+      dispatch(loginSuccess(token));
+      console.log('Successfully logged in : ', data.message);
     } catch (error) {
       console.error('Failed to login:', error.message);
     }

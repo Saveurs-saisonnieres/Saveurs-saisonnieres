@@ -1,27 +1,25 @@
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import LogOutButton from './LogOutButton';
-import { useAtom } from 'jotai'; // Assurez-vous d'importer useAtom depuis Jotai
-import { authAtom } from '../atoms/authAtom'; // Assurez-vous d'importer votre atom d'authentification
-
+import { useSelector } from 'react-redux';
 function NavBar() {
-  const [authState] = useAtom(authAtom); // Obtenez l'état d'authentification à partir de l'atom
-
+ // Obtenez l'état d'authentification à partir de l'atom
+  const token = useSelector((state) => state.auth.token);
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
       <Nav className="ml-auto">
-        {authState.bearerToken !== null ?  (
-          <LogOutButton />
-        ) : (
-          <>
-            <Nav.Link as={Link} to="/login">Sign in</Nav.Link>
-            <Nav.Link as={Link} to="/register">Sign up</Nav.Link>
-          </>
-        )}
+      {token ? (
+        <LogOutButton />
+      ) : (
+        <>
+          <Nav.Link as={Link} to="/login">Login</Nav.Link>
+          <Nav.Link as={Link} to="/register">Register</Nav.Link>
+        </>
+      )}
+
       </Nav>
     </Navbar>
   );
 }
-
 export default NavBar;

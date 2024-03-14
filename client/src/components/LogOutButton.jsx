@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 import { LogoutFetch } from "../services/authService";
-import { useAtom } from "jotai";
-import { authAtom } from "../atoms/authAtom";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux"
+import { logout } from "../features/authSlice";
 export default function LogOutButton() {
+  const dispatch = useDispatch();
 
-  const [, setAuth] = useAtom(authAtom);
 
   const handleClick = async () => {
     try {
-      const response = await LogoutFetch();
-      setAuth({ bearerToken: null });
-      console.log(response)
+      await LogoutFetch();
+      dispatch(logout()); // Dispatch l'action de déconnexion
+      console.log("Logged out successfully");
+      Cookies.remove("token");
+      window.location.href = "/login";
+
     } catch (error) {
       console.error('Failed to log out:', error.message);
     }
