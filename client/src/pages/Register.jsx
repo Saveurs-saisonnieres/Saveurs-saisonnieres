@@ -1,15 +1,23 @@
-
+import Grid from '@mui/material/Grid';
 import RegisterForm from '../components/RegisterForm';
 
 function Register() {
   return (
-    <>
-      <h1>Register</h1>
-      <RegisterForm />
-      <a href="/login">Already registered ?</a>
-      {" | "}
-      <a href="/">Back to home</a>
-    </>
+    <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+      {/* Colonne de gauche (vide dans cet exemple) */}
+      <Grid item xs={6}>
+        {/* Contenu de la colonne de gauche */}
+      </Grid>
+
+      {/* Colonne de droite (contenant le formulaire de connexion) */}
+      <Grid item xs={6}>
+        <Grid container justifyContent="center">
+          <Grid item>
+            <RegisterForm />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 

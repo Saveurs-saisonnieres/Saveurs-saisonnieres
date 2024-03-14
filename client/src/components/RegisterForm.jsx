@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { RegisterFetch } from '../services/authService';
 
+
+
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
 
 function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -42,47 +48,31 @@ function RegisterForm() {
 
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control 
-          type="email" 
-          name="email" 
-          value={formData.user.email} 
-          onChange={handleChange} 
-          placeholder="Enter email" 
-        />
-        <Form.Text className="text-muted">
-          We will never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control 
-          type="password" 
-          name="password" 
-          value={formData.user.password} 
-          onChange={handleChange} 
-          placeholder="Password" 
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control 
-          type="password" 
-          name="confirmPassword" 
-          value={formData.user.confirmPassword} 
-          onChange={handleChange} 
-          placeholder="Confirm Password" 
-        />
-      </Form.Group>
-
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+    <>
+      <Box>
+        <Box>
+          <Typography variant="h3" gutterBottom>
+            Inscription
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <FormControl>
+              <TextField id="outlined-basic" label="email" value={formData.email} variant="outlined" onChange={handleChange} name="email" />
+              <TextField id="outlined-basic" label="password" value={formData.password} variant="outlined" onChange={handleChange} name="password" />
+              <TextField id="outlined-basic" label="password" value={formData.confirmPassword} variant="outlined" onChange={handleChange} name="password" />
+              <Button variant="contained"type="submit">Login</Button>
+              <Box>
+                <Box>
+                  <Link href="/login">Already registered ?</Link>
+                </Box>
+                <Box>
+                  <Link href="/">Back to home</Link>
+                </Box>
+              </Box>
+            </FormControl>
+          </form>
+        </Box>
+      </Box>
+    </>
   );
 }
 
