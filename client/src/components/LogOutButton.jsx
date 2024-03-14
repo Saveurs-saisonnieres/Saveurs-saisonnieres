@@ -3,6 +3,7 @@ import { LogoutFetch } from "../services/authService";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux"
 import { logout } from "../features/authSlice";
+import Button from '@mui/material/Button';
 export default function LogOutButton() {
   const dispatch = useDispatch();
 
@@ -13,8 +14,6 @@ export default function LogOutButton() {
       dispatch(logout()); // Dispatch l'action de déconnexion
       console.log("Logged out successfully");
       Cookies.remove("token");
-      window.location.href = "/login";
-
     } catch (error) {
       console.error('Failed to log out:', error.message);
     }
@@ -23,8 +22,8 @@ export default function LogOutButton() {
     
   
   return (
-    <button onClick={handleClick}>
+    <Button variant="outlined" onClick={handleClick}>
       <Link to="/login">Log Out</Link>
-    </button>
-  )
+    </Button>
+  );
 }
