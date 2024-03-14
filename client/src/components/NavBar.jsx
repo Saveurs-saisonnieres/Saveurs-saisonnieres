@@ -1,25 +1,31 @@
-import { Navbar, Nav } from 'react-bootstrap';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import LogOutButton from './LogOutButton';
 import { useSelector } from 'react-redux';
-function NavBar() {
- // Obtenez l'état d'authentification à partir de l'atom
-  const token = useSelector((state) => state.auth.token);
-  return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
-      <Nav className="ml-auto">
-      {token ? (
-        <LogOutButton />
-      ) : (
-        <>
-          <Nav.Link as={Link} to="/login">Login</Nav.Link>
-          <Nav.Link as={Link} to="/register">Register</Nav.Link>
-        </>
-      )}
+import LogOutButton from './LogOutButton';
 
-      </Nav>
-    </Navbar>
+function NavBar() {
+  // Obtenez l'état d'authentification à partir de l'atom
+  const token = useSelector((state) => state.auth.token);
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
+          Home
+        </Typography>
+        <div>
+          {token ? (
+            <LogOutButton />
+          ) : (
+            <>
+              <Button component={Link} to="/login" color="inherit">Login</Button>
+              <Button component={Link} to="/register" color="inherit">Register</Button>
+            </>
+          )}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }
+
 export default NavBar;

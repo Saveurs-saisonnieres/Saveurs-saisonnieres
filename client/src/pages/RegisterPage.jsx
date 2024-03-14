@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import RegisterForm from '../components/RegisterForm';
 
-function Register() {
+function RegisterPage() {
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
       {/* Colonne de gauche (vide dans cet exemple) */}
@@ -21,4 +21,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;
