@@ -4,4 +4,6 @@ class User < ApplicationRecord
         :recoverable, :rememberable, :validatable, :jwt_authenticatable,
         jwt_revocation_strategy: JwtDenylist
   validates :email, presence: true
+  has_many :user_carts
+  has_many :carts, through: :user_carts
 end
