@@ -5,6 +5,7 @@ import AppRoutes from './components/AppRoutes'
 import { ThemeProvider } from '@mui/material'
 import theme from './assets/styles/theme'
 import { useSelector } from 'react-redux'
+import Footer from './components/Footer'
 function App() {
   const token = useSelector((state) => state.auth.token);
 
@@ -15,7 +16,7 @@ function App() {
           {token && <Navbar />}
 
           <AppRoutes />
-
+          <Footer />
         </Router>
       </ThemeProvider>
     </>
