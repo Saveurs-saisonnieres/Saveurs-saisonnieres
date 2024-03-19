@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from '../assets/LogoLog.svg';
-import Fonregister from '../assets/Fonregister.jpg';
+import FonLog from '../assets/FonLog.jpg';
 
 function Copyright() {
   return (
@@ -48,7 +48,7 @@ export default function SignUp() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: `url(${Fonregister})`,
+            backgroundImage: `url(${FonLog})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -125,7 +125,7 @@ export default function SignUp() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: '#C0CA33', '&:hover': { bgcolor: '#828A0E' } }}
+                sx={{ mt: 3, mb: 2, bgcolor: '#9C27B0', '&:hover': { bgcolor: '#5C107C' } }}
               >
                 Sign Up
               </Button>
