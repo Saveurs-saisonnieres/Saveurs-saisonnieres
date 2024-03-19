@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user!
   before_action :set_cart, only: %i[ show update destroy ]
 
   # GET /carts
@@ -39,7 +39,7 @@ class CartsController < ApplicationController
     if @cart.destroy
       head :no_content
     else
-      render json: { error: 'Unable to destroy cart' }, status: :unprocessable_entity
+      render json: { error: 'Le panier n\'a pas pu être supprimé' }, status: :unprocessable_entity
     end
   end
 
