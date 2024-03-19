@@ -1,9 +1,10 @@
 class CartsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_cart, only: %i[ show update destroy ]
 
   # GET /carts
   def index
-    @carts = Cart.all
+    @carts = current_user.carts.order(:created_at)
 
     render json: @carts
   end
@@ -15,7 +16,7 @@ class CartsController < ApplicationController
 
   # POST /carts
   def create
-    @cart = Cart.new(cart_params)
+    @cart = current_user.carts.build(cart_params)
 
     if @cart.save
       render json: @cart, status: :created, location: @cart
@@ -35,13 +36,17 @@ class CartsController < ApplicationController
 
   # DELETE /carts/1
   def destroy
-    @cart.destroy!
+    if @cart.destroy
+      head :no_content
+    else
+      render json: { error: 'Unable to destroy cart' }, status: :unprocessable_entity
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      @cart = current_user.carts.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
