@@ -13,6 +13,7 @@ const ProductDetail = () => {
           `http://localhost:3000/products/${id}`
         );
         setProduct(response.data);
+        console.log("Product:", response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -30,7 +31,12 @@ const ProductDetail = () => {
           <p>Description: {product.description}</p>
           <p>Origin: {product.origin}</p>
           <p>Variety: {product.variety}</p>
-          {product.img_url && <img src={product.img_url} alt="Product" />}
+          {product.img_url && (
+            <img
+              src={"http://localhost:3000/" + product.img_url}
+              alt="Product"
+            />
+          )}
         </div>
       )}
     </div>
