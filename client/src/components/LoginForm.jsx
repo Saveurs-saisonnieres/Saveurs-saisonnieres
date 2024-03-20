@@ -1,4 +1,4 @@
-import * as React from 'react';
+// import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -34,7 +34,7 @@ export default function LoginForm() {
       Cookies.set('token', token);
       dispatch(login(token));
       console.log('Successfully logged in : ', data.message);
-      window.location.href = '/';
+      // window.location.href = '/';
     } catch (error) {
       console.error('Failed to login:', error.message);
     }

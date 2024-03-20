@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
     if @product.destroy
       head :no_content
     else
-      render json: { error: 'Unable to destroy product' }, status: :unprocessable_entity
+      render json: { error: 'Une erreur a eu lieu lors de la suppression' }, status: :unprocessable_entity
     end
   end
 
@@ -59,8 +59,8 @@ class ProductsController < ApplicationController
     end
 
     def authorize_admin
-      unless current_user & current_user.admin?
-        render json: { error: 'Unauthorized' }, status: :unauthorized
+      unless current_user && current_user.admin?
+        render json: { error: 'Vous n\'avez pas accès à cette ressource' }, status: :unauthorized
       end
     end
 end

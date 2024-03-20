@@ -4,16 +4,19 @@ import Navbar from './components/NavBar'
 import AppRoutes from './components/AppRoutes'
 import { ThemeProvider } from '@mui/material'
 import theme from './assets/styles/theme'
+import { useSelector } from 'react-redux'
+import Footer from './components/Footer'
 function App() {
-
+  const token = useSelector((state) => state.auth.token);
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Router>
-          <Navbar />
-          <AppRoutes />
+          {token && <Navbar />}
 
+          <AppRoutes />
+          <Footer />
         </Router>
       </ThemeProvider>
     </>
