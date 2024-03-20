@@ -4,7 +4,7 @@ import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage'
 import EditPasswordPage from '../pages/EditPasswordPage'
-
+import IndexProduct from '../pages/IndexProduct'
 function AppRoutes() {
   return (
     <Routes>
@@ -13,6 +13,7 @@ function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/password/reset" element={<ResetPasswordPage />} />
       <Route path="/users/password/edit" element={<EditPasswordPage />} />
+      <Route path="/products" element={<IndexProduct />} />
     </Routes>
   )
 }
