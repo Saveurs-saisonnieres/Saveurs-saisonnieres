@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :authorize_admin, only: [:create, :update, :destroy]
+  # before_action :authenticate_user!, except: [:index, :show]
+  # before_action :authorize_admin, only: [:create, :update, :destroy]
   before_action :set_product, only: [:show, :update, :destroy]
 
   # GET /products
@@ -12,7 +12,8 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
-    render json: @product
+    @product = Product.find(params[:id])
+    render json: @product.as_json(methods: :img_url)
   end
 
   # POST /products
@@ -54,7 +55,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :img, :price, :description, :origin, :variety, :categorie, :quantity)
+      params.require(:product).permit(:name, :image, :price, :description, :origin, :variety, :categorie)
     end
 
     def authorize_admin
