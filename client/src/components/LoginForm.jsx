@@ -15,8 +15,10 @@ import { useRef } from "react";
 import { LoginFetch } from "../services/authService";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
-import Logo from "../assets/LogoLog.svg";
-import FonLog from "../assets/FonLog.jpg";
+
+import Logo from '../assets/images/LogoLog.svg'; 
+import Fonregister from '../assets/images/Fonregister.jpg';
+
 
 export default function LoginForm() {
   const emailRef = useRef("");
@@ -53,8 +55,8 @@ export default function LoginForm() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: `url(${FonLog})`,
-            backgroundRepeat: "no-repeat",
+            backgroundImage: `url(${Fonregister})`,
+            backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]
@@ -117,12 +119,7 @@ export default function LoginForm() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  bgcolor: "#9C27B0",
-                  "&:hover": { bgcolor: "#5C107C" },
-                }}
+                sx={{ mt: 3, mb: 2, bgcolor: '#afb42b', '&:hover': { bgcolor: '#828A0E' } }}
               >
                 Sign In
               </Button>
@@ -133,7 +130,7 @@ export default function LoginForm() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="register" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

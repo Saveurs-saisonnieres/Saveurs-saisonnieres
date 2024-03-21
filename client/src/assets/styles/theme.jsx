@@ -4,19 +4,19 @@ import { lime, purple } from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      main: lime[600],
+      main: '#afb42b',
       '&:hover': {
         color: 'white',
-        backgroundColor: lime[700],
+        backgroundColor: '#828A0E',
       },
     },
     secondary: {
-      main: purple[700],
+      main: '#7b1fa2',
       '&:hover': {
         color: 'white',
-        backgroundColor: purple[800],
+        backgroundColor: '#5C107C',
       }
     },
   },
 })
-export default theme
+export default theme;
