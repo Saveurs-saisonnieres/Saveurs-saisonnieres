@@ -16,10 +16,10 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.token = null;
       Cookies.remove("token"); // Supprimer le token du cookie lors de la déconnexion
+      localStorage.removeItem("useradmin");
     },
   },
 });
-
 
 export const { login, logout } = authSlice.actions;
 export const selectAuth = (state) => state.auth;

@@ -9,8 +9,8 @@ const AddProductForm = () => {
     origin: "",
     variety: "",
     image: null, // Modifier image en image
+    isAdmin: localStorage.getItem("useradmin") === "true" ? true : false,
   });
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setProductData({
@@ -36,22 +36,30 @@ const AddProductForm = () => {
     formData.append("origin", productData.origin);
     formData.append("variety", productData.variety);
     formData.append("image", productData.image);
+    formData.append("isAdmin", productData.isAdmin);
 
     try {
       console.log("Données du produit:", productData);
 
-      const response = await axios.post("http://localhost:3000/products", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        product: {
-          name: productData.name,
-          price: productData.price,
-          description: productData.description,
-          origin: productData.origin,
-          variety: productData.variety,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3000/products",
+        formData,
+        {
+          params: {
+            isAdmin: productData.isAdmin,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+          product: {
+            name: productData.name,
+            price: productData.price,
+            description: productData.description,
+            origin: productData.origin,
+            variety: productData.variety,
+          },
+        }
+      );
       console.log("Réponse de création de produit:", response);
 
       if (response.status === 201) {

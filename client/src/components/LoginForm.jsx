@@ -1,26 +1,26 @@
 // import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Cookies from "js-cookie";
-import { useRef } from 'react';
-import { LoginFetch } from '../services/authService';
+import { useRef } from "react";
+import { LoginFetch } from "../services/authService";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
-import Logo from '../assets/LogoLog.svg'; 
-import FonLog from '../assets/FonLog.jpg';
+import Logo from "../assets/LogoLog.svg";
+import FonLog from "../assets/FonLog.jpg";
 
 export default function LoginForm() {
-  const emailRef = useRef('');
-  const passwordRef = useRef('');
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -30,19 +30,22 @@ export default function LoginForm() {
 
     try {
       const { data, headers } = await LoginFetch(email, password);
-      const token = headers.authorization; 
-      Cookies.set('token', token);
+      console.log(data);
+      const user = data.user;
+      localStorage.setItem("useradmin", user.admin);
+      const token = headers.authorization;
+      Cookies.set("token", token);
       dispatch(login(token));
-      console.log('Successfully logged in : ', data.message);
+      console.log("Successfully logged in : ", data.message);
       // window.location.href = '/';
     } catch (error) {
-      console.error('Failed to login:', error.message);
+      console.error("Failed to login:", error.message);
     }
   };
 
   return (
     <ThemeProvider theme={createTheme()}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -51,11 +54,13 @@ export default function LoginForm() {
           md={7}
           sx={{
             backgroundImage: `url(${FonLog})`,
-            backgroundRepeat: 'no-repeat',
+            backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -63,16 +68,25 @@ export default function LoginForm() {
             sx={{
               my: 8,
               mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <img src={Logo} alt="Logo" style={{ width: '200px', height: 'auto', marginBottom: 20 }} />
+            <img
+              src={Logo}
+              alt="Logo"
+              style={{ width: "200px", height: "auto", marginBottom: 20 }}
+            />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -103,7 +117,12 @@ export default function LoginForm() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: '#9C27B0', '&:hover': { bgcolor: '#5C107C' } }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  bgcolor: "#9C27B0",
+                  "&:hover": { bgcolor: "#5C107C" },
+                }}
               >
                 Sign In
               </Button>
