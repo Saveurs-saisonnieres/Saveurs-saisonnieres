@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,30 +11,42 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from '../assets/LogoLog.svg';
 import Fonregister from '../assets/Fonregister.jpg';
+import { RegisterFetch } from '../services/authService';
+import { useRef } from 'react';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+export default function RegisterForm() {
+  const emailRef = useRef('');
+  const passwordRef = useRef('');
+  const confirmPasswordRef = useRef('');
+  const firstNameRef = useRef('');
+  const lastNameRef = useRef('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    const confirmPassword = confirmPasswordRef.current.value;
+    const firstName = firstNameRef.current.value;
+    const lastName = lastNameRef.current.value;
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Confirm Password:', confirmPassword);
+    console.log('First Name:', firstName);
+    console.log('Last Name:', lastName);
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    try {
+      const data = await RegisterFetch(email, password, firstName, lastName);
+      console.log(data);
+      window.location.href = '/';
+    } catch (error) {
+      alert('Failed to register: ' + error.message);
+    }
   };
 
   return (
@@ -80,6 +91,7 @@ export default function SignUp() {
                     fullWidth
                     id="firstName"
                     label="First Name"
+                    inputRef={firstNameRef}
                     autoFocus
                   />
                 </Grid>
@@ -90,6 +102,7 @@ export default function SignUp() {
                     id="lastName"
                     label="Last Name"
                     name="lastName"
+                    inputRef={lastNameRef}
                     autoComplete="family-name"
                   />
                 </Grid>
@@ -100,6 +113,7 @@ export default function SignUp() {
                     id="email"
                     label="Email Address"
                     name="email"
+                    inputRef={emailRef}
                     autoComplete="email"
                   />
                 </Grid>
@@ -111,6 +125,19 @@ export default function SignUp() {
                     label="Password"
                     type="password"
                     id="password"
+                    inputRef={passwordRef}
+                    autoComplete="new-password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password confirmation"
+                    label="Password Confirmation"
+                    type="password"
+                    id="password-confirmation"
+                    inputRef={confirmPasswordRef}
                     autoComplete="new-password"
                   />
                 </Grid>
