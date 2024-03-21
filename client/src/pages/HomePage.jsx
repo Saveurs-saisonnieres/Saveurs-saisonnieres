@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import du composant Link
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import welcomeImage from '../assets/images/welcomeF.svg';
 import Abbio from '../assets/images/Abbio.svg'; 
@@ -11,6 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import RondLoc from '../assets/images/RondLoc.svg';
 import RondThunder from '../assets/images/RondThunder.svg';
 import RondVelo from '../assets/images/RondVelo.svg';
+import { footerBot, pRond, rond, pStyle123, paragraphContainerStyle ,iconStyleLine ,iconStyle , containerStyleInline, rowStyle, textContainerStyle, homeStyle, homeStyleParapgraph, centeredContentStyle, h1Style, h2Style, pStyle, imgStyle, buttonTextStyle } from '../assets/styles/style.js'
 
 function HomePage() {
   const containerStyle = {
@@ -23,142 +24,13 @@ function HomePage() {
     backgroundRepeat: 'no-repeat',
     position: 'relative',
     padding: '50px 200px 100px 200px',
-
-  };
-
-  const rowStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexGrow: 1,
-    alignItems: 'center', 
-    color: 'black', 
-  };
-
-  const textContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
-  const homeStyle = {
-    display: 'block',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    height: '100%',
-    color: 'white',
-  };
-
-  const homeStyleParapgraph = {
-    color: 'white', 
-    fontWeight: 'bold',
-    fontSize: '25px',
-  };
-
-  const centeredContentStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-  
-  const h1Style = {
-    color: '#8B1D1D',
-    display: 'flex',
-    alignItems: 'center', 
-    justifyContent: 'center',
-  };
-
-  const h2Style = {
-    color: '#8B1D1D',
-    display: 'flex',
-    alignItems: 'center', 
-    justifyContent: 'center',
-    marginBottom: 100,
-  };
-  
-  const pStyle = {
-    color: '#C0CA33', 
-    fontSize: '25px',
-  };
-
-  const imgStyle = {
-    zIndex: '999', 
-    width: '150px',
-  };
-
-  const buttonTextStyle = {
-    color: 'black',
-    fontWeight: 'bold', 
-  };
-
-  const containerStyleInline = {
-    display: 'flex',
-    alignItems: 'center', 
-    justifyContent: 'center',
-    color: '#8B1D1D', 
-  };
-  
-  const iconStyle = {
-    fontSize: 100,
-    marginRight: 15,
-    marginLeft: 15,
-    marginBottom: -5,
-  };
-
-  const iconStyleLine = {
-    fontSize: 100,
-    marginRight: 2,
-    height: 100,
-    marginBottom: -4,
-  };
-
-  const paragraphContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-  };
-
-  const pStyle123 = {
-    color: '#C0CA33', 
-    fontSize: '25px',
-    marginLeft: '100px',
-    marginRight: '100px',
-    marginBottom: '100px',
-  };
-
-  const rond = {
-    zIndex: '999',
-    width: '150px',
-    marginLeft: '150px',
-    marginRight: '150px',
-    marginBottom: '100px',
-
-  };
-
-  const pRond = {
-    color: '#C0CA33', 
-    marginLeft: '-100px',
-    fontSize: '20px',
-    marginBottom: '100px',
-  };
-
-  const footerBot = {
-    marginBottom: '100px',
-    color: '#8B1D1D',
-    fontSize: '30px',
-    display: 'flex',
-    alignItems: 'center', 
-    justifyContent: 'center',
-  };
-
+    };
   return (
     <div>
       <div style={containerStyle}>
         <div style={rowStyle}>
           <div style={textContainerStyle}>
-            <img src={Blanc} alt="Logo" style={imgStyle} />
+            <img src={Blanc} alt="Logo Saveurs-Saisonnieres blanc" style={imgStyle} />
           </div>
           <div style={textContainerStyle}>
             <Link to="/login">
@@ -220,7 +92,7 @@ function HomePage() {
             </Button>
           </div>
           <div style={{ ...textContainerStyle, flex: '1', textAlign: 'center' }}>
-            <img src={Abbio} alt="Abbio" style={imgStyle} />
+            <img src={Abbio} alt="Logo Culture Bio blanc" style={imgStyle} />
           </div>
           <div style={textContainerStyle}>
             <Button
@@ -270,11 +142,11 @@ function HomePage() {
         <h1 style={h2Style}>Les avantages d’une commande chez Saveurs Saisonnières</h1>
       </div>
       <div style={containerStyleInline}>
-        <img src={RondVelo} alt="Logo" style={rond} />
+        <img src={RondVelo} alt="Rond de couleur vert icon vélo" style={rond} />
         <p style ={pRond}>Produit frais<br />et locale</p>
-        <img src={RondLoc} alt="Logo" style={rond} />
+        <img src={RondLoc} alt="Rond de couleur jaune icon localisation" style={rond} />
         <p style ={pRond}>Relation de proximité,<br />moins de pollution</p>
-        <img src={RondThunder} alt="Logo" style={rond} />
+        <img src={RondThunder} alt="Rond de couleur marron icon thunder" style={rond} />
         <p style ={pRond}>Rapidité de<br />préparation</p>
       </div>
       <div>
