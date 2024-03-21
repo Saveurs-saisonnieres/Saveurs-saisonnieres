@@ -1,12 +1,14 @@
 import { API_URL } from "../constants";
 import axios from "axios";
 
-async function RegisterFetch(email, password) {
+async function RegisterFetch(email, password, firstName, lastName) {
   try {
     const response = await axios.post(API_URL, {
       user: {
         email: email,
-        password: password
+        password: password,
+        first_name: firstName,
+        last_name: lastName
       }
     });
     
