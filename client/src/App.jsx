@@ -7,14 +7,14 @@ import theme from './assets/styles/theme'
 import { useSelector } from 'react-redux'
 import Footer from './components/Footer'
 function App() {
-  {/*const token = useSelector((state) => state.auth.token);*/}
+  const token = useSelector((state) => state.auth.token);
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <Router>
-          {/*{token && <Navbar />}*/}
-          <Navbar />
+          {token && <Navbar />}
+
           <AppRoutes />
           <Footer />
         </Router>

@@ -1,31 +1,48 @@
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import LogOutButton from './LogOutButton';
+import LogoHome from './LogoHome';
+import { Link } from 'react-router-dom'; 
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function NavBar() {
-  // Obtenez l'état d'authentification à partir de l'atom
   const token = useSelector((state) => state.auth.token);
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
-          Home
-        </Typography>
-        <div>
-          {token ? (
-            <LogOutButton />
-          ) : (
+    <div style={{ marginTop: 50 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center', mt: 5 }}>
+          <LogoHome />
+          
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
             <>
-              <Button component={Link} to="/login" color="inherit">Login</Button>
-              <Button component={Link} to="/register" color="inherit">Register</Button>
+              <ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} />
+              <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
+              <Button
+                component={Link}
+                to=""
+                variant="text"
+                color="inherit"
+                sx={{
+                  marginTop: -5,
+                  marginRight: 20,
+                  bgcolor: '#FFFFFF',
+                  color: '#000000',
+                  '&:hover': {
+                    bgcolor: '#E5E5E5', 
+                  },
+                }}
+              >
+                Se déconnecter
+              </Button>
             </>
-          )}
-        </div>
-      </Toolbar>
-    </AppBar>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
 export default NavBar;
+
