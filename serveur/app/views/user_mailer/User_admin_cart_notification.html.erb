@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+<div>
+  <p>
+      Bonjour, mon primeur préféré !
+  </p>
+  <p>
+    Bonne nouvelle ! Une nouvelle commande à préparer.
+  </p>
+  <p>
+    Détails de la location effectuée :
+    <ul>
+      <li>Client : <%=  %></li>
+      <li>Commande : <%=  %></li>
+      <li>Montant payé : <%= @cart.total_cost %> €</li>
+    </ul>
+  </p>
+
+  <p>
+    Tu as une heure pour pouvoir préparer la commande, on compte sur toi !
+  </p>
+</div>

@@ -1,6 +1,18 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+  config.action_mailer.default_url_options = { :host => '???' }
+
+  ActionMailer::Base.smtp_settings = {
+    :user_name => ENV['MAILJET_NORMAL_KEY'],
+    :password => ENV['MAILJET_SECRET_KEY'],
+    :domain => 'http://127.0.0.1:3000/',
+    :address => 'in-v3.mailjet.com',
+    :port => 587,
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
