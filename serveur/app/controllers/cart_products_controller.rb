@@ -1,51 +1,44 @@
 class CartProductsController < ApplicationController
-  before_action :set_cart_product, only: %i[ show update destroy ]
-
-  # GET /cart_products
-  def index
-    @cart_products = CartProduct.all
-
-    render json: @cart_products
-  end
-
-  # GET /cart_products/1
-  def show
-    render json: @cart_product
-  end
+  before_action :authenticate_user!
+  respond_to :json
 
   # POST /cart_products
   def create
-    @cart_product = CartProduct.new(cart_product_params)
-
-    if @cart_product.save
-      render json: @cart_product, status: :created, location: @cart_product
+    product = Product.find(params[:productId])
+    cart = current_user.cart
+  
+    # Vérifier si le produit existe déjà dans le panier de l'utilisateur
+    if cart.cart_products.exists?(product_id: product.id)
+      render json: { error: 'Product already exists in cart' }, status: :unprocessable_entity
+      return
+    end
+  
+    cart_product = cart.cart_products.build(product: product)
+  
+    if cart_product.save
+      render json: { message: 'Product added to cart successfully' }, status: :created
     else
-      render json: @cart_product.errors, status: :unprocessable_entity
+      render json: { errors: cart_product.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
-  # PATCH/PUT /cart_products/1
-  def update
-    if @cart_product.update(cart_product_params)
-      render json: @cart_product
-    else
-      render json: @cart_product.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /cart_products/1
+  
   def destroy
-    @cart_product.destroy!
+    product = Product.find(params[:productId])
+    cart = current_user.cart
+  
+    # Rechercher l'élément du panier correspondant au produit à supprimer
+    cart_product = cart.cart_products.find_by(product_id: product.id)
+  
+    # Vérifier si l'élément du panier existe
+    if cart_product
+      cart_product.destroy
+      render json: { message: 'Product removed from cart successfully' }, status: :ok
+    else
+      render json: { error: 'Product not found in cart' }, status: :not_found
+    end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cart_product
-      @cart_product = CartProduct.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def cart_product_params
-      params.require(:cart_product).permit(:cart_id, :product_id, :quantity)
-    end
+  
+  def cart_product_params
+    params.require(:cart_product).permit(:product_id, :quantity)
+  end
 end
