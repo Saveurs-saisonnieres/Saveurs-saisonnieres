@@ -19,6 +19,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def register_failed
-    render json: { message: 'Something went wrong.' }, status: :unprocessable_entity
+    render json: { message: 'Erreur d\'inscription.' }, status: :unprocessable_entity
   end
 end
