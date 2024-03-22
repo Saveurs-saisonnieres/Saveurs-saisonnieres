@@ -1,8 +1,9 @@
-
 Rails.application.routes.draw do
-  resources :cart_products
-  resources :user_carts
-  resources :carts
+  
+  get '/cart', to: 'carts#show'
+  post '/add_to_cart', to: 'cart_products#create' 
+  delete '/cart_products/:productId', to: 'cart_products#destroy', as: 'delete_cart_product'
+
   resources :products do
     resources :product_images, only: [:create, :destroy]
   end
