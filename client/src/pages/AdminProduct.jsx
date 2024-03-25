@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { GetProducts, DeleteProductfetch } from "../services/productService";
+import AddProductForm from "../components/AddProductForm";
 import {
   Typography,
   List,
@@ -8,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 
-function IndexProduct() {
+function AdminProduct() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -60,8 +61,9 @@ function IndexProduct() {
           </ListItem>
         ))}
       </List>
+      <AddProductForm onClick={fetchProducts} />
     </>
   );
 }
 
-export default IndexProduct;
+export default AdminProduct;
