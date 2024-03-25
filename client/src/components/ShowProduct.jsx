@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { AddProductToCart } from "../services/cartServices";
 
-const ProductDetail = () => {
-  const { id } = useParams(); // Utilisation de useParams pour extraire l'ID du produit de l'URL
+const ShowProduct = () => {
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -18,30 +19,32 @@ const ProductDetail = () => {
         console.error("Error fetching product:", error);
       }
     };
-
     fetchProduct();
-  }, [id]); // Utilisation de l'ID comme dépendance de l'effet useEffect
+  }, [id]);
 
   return (
     <div>
+      <h2>Product Details</h2>
       {product && (
         <div>
-          <h2>{product.name}</h2>
+          <h3>{product.name}</h3>
           <p>Price: {product.price}</p>
           <p>Description: {product.description}</p>
           <p>Origin: {product.origin}</p>
           <p>Variety: {product.variety}</p>
-          {console.log("Product Image URL:", product.img_url)}
           {product.img_url && (
             <img
               src={"http://localhost:3000/" + product.img_url}
               alt="Product"
             />
           )}
+          <button onClick={() => AddProductToCart(product.id)}>
+            Add to cart
+          </button>
         </div>
       )}
     </div>
   );
 };
 
-export default ProductDetail;
+export default ShowProduct;

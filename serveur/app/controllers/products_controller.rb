@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
 
-    render json: @products
+    render json: @products.as_json(methods: :img_url)
   end
 
   # GET /products/1
