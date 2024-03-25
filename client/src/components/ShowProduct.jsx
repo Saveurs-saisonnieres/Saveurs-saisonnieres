@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AddProductToCart } from "../services/cartServices";
 import { useParams } from "react-router-dom";
+import { AddProductToCart } from "../services/cartServices";
 
-const ShowProducts = () => {
+const ShowProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -19,9 +19,8 @@ const ShowProducts = () => {
         console.error("Error fetching product:", error);
       }
     };
-
     fetchProduct();
-  }, [id]); 
+  }, [id]);
 
   return (
     <div>
@@ -34,13 +33,18 @@ const ShowProducts = () => {
           <p>Origin: {product.origin}</p>
           <p>Variety: {product.variety}</p>
           {product.img_url && (
-            <img src={"http://localhost:3000/" + product.img_url} alt="Product" />
+            <img
+              src={"http://localhost:3000/" + product.img_url}
+              alt="Product"
+            />
           )}
-          <button onClick={() => AddProductToCart(product.id)}>Add to cart</button>
+          <button onClick={() => AddProductToCart(product.id)}>
+            Add to cart
+          </button>
         </div>
       )}
     </div>
   );
 };
 
-export default ShowProducts;
+export default ShowProduct;
