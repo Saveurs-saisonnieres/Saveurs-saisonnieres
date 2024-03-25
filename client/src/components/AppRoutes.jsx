@@ -7,7 +7,7 @@ import EditPasswordPage from "../pages/EditPasswordPage";
 import AddProductForm from "./AddProductForm";
 import ShowCart from "../pages/ShowCart";
 import ShowProduct from "./ShowProduct";
-import ShowProducts from "./ShowProducts";
+import IndexProducts from "../components/IndexProducts";
 import AdminProduct from "../pages/AdminProduct";
 
 function AppRoutes() {
@@ -22,6 +22,7 @@ function AppRoutes() {
       <Route path="/cart" element={<ShowCart />} />
       <Route path="/products/:id" element={<ShowProduct />} />
       <Route path="/admin/products" element={<AdminProduct />} />
+      <Route path="/products" element={<IndexProducts />} />
     </Routes>
   );
 }
