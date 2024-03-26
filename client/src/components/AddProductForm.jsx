@@ -1,28 +1,17 @@
-// AddProductForm.jsx
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AddProductfetch } from "../services/productService";
-import Cookies from "js-cookie";
-import {
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  InputLabel,
-  Input,
-} from "@mui/material";
+import { Select, MenuItem, TextField, Button, Grid, Typography, Container, Box } from "@mui/material";
 
 const AddProductForm = () => {
-  const navigate = useNavigate(); // Initialisez le hook useNavigate
   const [productData, setProductData] = useState({
     name: "",
     price: "",
     description: "",
     origin: "",
     variety: "",
+    category: "",
     image: null,
-    isAdmin: Cookies.get("useradmin"),
+    isAdmin: localStorage.getItem("useradmin") === "true" ? true : false,
   });
   const [, setSubmitting] = useState(false);
   const [, setError] = useState(null);
@@ -50,89 +39,96 @@ const AddProductForm = () => {
     setSuccess(false);
 
     try {
-      console.log("Product data:", productData);
+      console.log("Données du produit:", productData);
       await AddProductfetch(productData);
-      console.log("Produit ajouté avec succès.");
       setSuccess(true);
-      navigate("/admin/products"); // Redirection vers la page AdminProduct
     } catch (error) {
       setError(error.message);
     } finally {
       setSubmitting(false);
     }
   };
-  console.log(productData);
+
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="100vh"
-    >
-      <form onSubmit={handleSubmit} style={{ width: "400px" }}>
-        <Typography
-          variant="h5"
-          sx={{ fontWeight: "bold" }}
-          align="center"
-          gutterBottom
-        >
-          Ajouter un produit
-        </Typography>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel>Nom</InputLabel>
-          <Input
-            name="name"
-            value={productData.name}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel>Prix</InputLabel>
-          <Input
-            name="price"
-            value={productData.price}
-            onChange={handleInputChange}
-            type="number"
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel>Description</InputLabel>
-          <Input
-            name="description"
-            value={productData.description}
-            onChange={handleInputChange}
-            multiline
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel>Origine</InputLabel>
-          <Input
-            name="origin"
-            value={productData.origin}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <InputLabel>Variété</InputLabel>
-          <Input
-            name="variety"
-            value={productData.variety}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <FormControl margin="normal" fullWidth>
-          <Input
-            type="file"
-            id="image-upload"
-            onChange={handleFileChange}
-            required
-          />
-        </FormControl>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          Créer le produit
-        </Button>
-      </form>
-    </Box>
+    <Container maxWidth="sm">
+      <Box mt={3} pb={5}>
+        <Typography variant="h4" gutterBottom>Créer un nouveau produit</Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nom"
+                type="text"
+                name="name"
+                value={productData.name}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Prix"
+                type="number"
+                name="price"
+                value={productData.price}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={4}
+                name="description"
+                value={productData.description}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Origine"
+                type="text"
+                name="origin"
+                value={productData.origin}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Variété"
+                type="text"
+                name="variety"
+                value={productData.variety}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>Catégorie</Typography>
+              <Select
+                fullWidth
+                label="Catégorie"
+                value={productData.category}
+                onChange={(event) => setProductData({ ...productData, category: event.target.value })}
+              >
+                <MenuItem value="Fruits">Fruits</MenuItem>
+                <MenuItem value="Légumes">Légumes</MenuItem>
+                <MenuItem value="Paniers">Paniers</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <input type="file" onChange={handleFileChange} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary">Créer le produit</Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Container>
   );
 };
 
