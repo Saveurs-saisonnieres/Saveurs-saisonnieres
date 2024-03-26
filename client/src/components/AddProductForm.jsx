@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AddProductfetch } from "../services/productService";
-import { Select, MenuItem, TextField, Button, Grid, Typography, Container, Box } from "@mui/material";
+import Cookies from "js-cookie";
+import { Container, Box, Typography, Grid, TextField, Select, MenuItem, Button } from '@mui/material';
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -11,7 +13,7 @@ const AddProductForm = () => {
     variety: "",
     category: "",
     image: null,
-    isAdmin: localStorage.getItem("useradmin") === "true" ? true : false,
+    isAdmin: Cookies.get("useradmin"),
   });
   const [, setSubmitting] = useState(false);
   const [, setError] = useState(null);
