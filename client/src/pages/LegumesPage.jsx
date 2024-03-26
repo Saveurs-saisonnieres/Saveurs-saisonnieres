@@ -11,23 +11,23 @@ import PaginationItem from "@mui/material/PaginationItem";
 import { AddProductToCart } from "../services/cartServices";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
+const LegumePage = () => {
+  const [legumeProducts, setLegumeProducts] = useState([]);
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const productsPerLine = 4;
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchLegumeProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products");
-        setProducts(response.data);
+        const response = await axios.get("http://localhost:3000/products?category=Legumes");
+        setLegumeProducts(response.data);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching legume products:", error);
       }
     };
 
-    fetchProducts();
+    fetchLegumeProducts();
   }, []);
 
   const handlePageChange = (event, value) => {
@@ -37,7 +37,7 @@ const ProductList = () => {
   const renderPaginationItem = (item) => (
     <PaginationItem
       component={Link}
-      to={`/products?page=${item.page}`}
+      to={`/legumes?page=${item.page}`}
       {...item}
     />
   );
@@ -60,11 +60,11 @@ const ProductList = () => {
           marginBottom: "20px",
         }}
       >
-        {products
+        {legumeProducts
           .slice((page - 1) * productsPerPage, page * productsPerPage)
           .map((product, index) => (
             <Card
-              key={product.id}
+              key={index}
               style={{
                 marginBottom: "50px",
                 maxWidth: "300px",
@@ -158,7 +158,7 @@ const ProductList = () => {
           ))}
       </div>
       <Pagination
-        count={Math.ceil(products.length / productsPerPage)}
+        count={Math.ceil(legumeProducts.length / productsPerPage)}
         page={page}
         onChange={handlePageChange}
         renderItem={renderPaginationItem}
@@ -167,4 +167,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default LegumePage;

@@ -6,13 +6,12 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import EditPasswordPage from "../pages/EditPasswordPage";
 import ShowCart from "../pages/ShowCart";
 import ShowProduct from "./ShowProduct";
-import ShowProducts from "./ShowProducts";
 import AdminProduct from "../pages/AdminProduct";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
 import LegumesPage from "../pages/LegumesPage";
 import FruitsPage from "../pages/FruitsPage";
-
+import IndexProducts from "./IndexProducts";
 function AppRoutes() {
   return (
     <Routes>
@@ -23,7 +22,7 @@ function AppRoutes() {
       <Route path="/users/password/edit" element={<EditPasswordPage />} />
       <Route path="/cart" element={<ShowCart />} />
       <Route path="/products/:id" element={<ShowProduct />} />
-      <Route path="/products" element={<ShowProducts />} />
+      <Route path="/products" element={<IndexProducts />} />
       <Route path="/admin/products" element={<AdminProduct />} />
       <Route path="/admin/products/add" element={<AddProductForm />} />
       <Route

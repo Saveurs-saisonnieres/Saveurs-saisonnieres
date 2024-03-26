@@ -1,6 +1,5 @@
 import { AppBar, Toolbar, Button } from '@mui/material';
 import { useSelector } from 'react-redux';
-import LogOutButton from './LogOutButton';
 import LogoHome from './LogoHome';
 import { Link } from 'react-router-dom'; 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -16,10 +15,15 @@ function NavBar() {
           <LogoHome />
           
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+            <div style={{ marginRight: 200 }}>
+              <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white' }}>Légumes</Button>
+              <Button component={Link} to="/fruits" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white'}}>Fruits</Button>
+              <Button component={Link} to="/panier" color="inherit" sx={{ marginRight: 80, paddingBottom: 4, color: 'white' }}>Panier</Button>
+            </div>
             <>
               <ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} />
               <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
-              <Button
+              <Button 
                 component={Link}
                 to=""
                 variant="text"
@@ -45,4 +49,3 @@ function NavBar() {
 }
 
 export default NavBar;
-

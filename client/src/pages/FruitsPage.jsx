@@ -11,23 +11,23 @@ import PaginationItem from "@mui/material/PaginationItem";
 import { AddProductToCart } from "../services/cartServices";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
+const FruitsPage = () => {
+  const [fruits, setFruits] = useState([]);
   const [page, setPage] = useState(1);
-  const productsPerPage = 12;
-  const productsPerLine = 4;
+  const fruitsPerPage = 12;
+  const fruitsPerLine = 4;
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchFruits = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/products");
-        setProducts(response.data);
+        const response = await axios.get("http://localhost:3000/products?category=Fruits");
+        setFruits(response.data);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching fruits:", error);
       }
     };
 
-    fetchProducts();
+    fetchFruits();
   }, []);
 
   const handlePageChange = (event, value) => {
@@ -37,10 +37,11 @@ const ProductList = () => {
   const renderPaginationItem = (item) => (
     <PaginationItem
       component={Link}
-      to={`/products?page=${item.page}`}
+      to={`/fruits?page=${item.page}`}
       {...item}
     />
   );
+console.log(fruits);
 
   return (
     <div
@@ -60,18 +61,18 @@ const ProductList = () => {
           marginBottom: "20px",
         }}
       >
-        {products
-          .slice((page - 1) * productsPerPage, page * productsPerPage)
-          .map((product, index) => (
+        {fruits
+          .slice((page - 1) * fruitsPerPage, page * fruitsPerPage)
+          .map((fruit, index) => (
             <Card
-              key={product.id}
+              key={index}
               style={{
                 marginBottom: "50px",
                 maxWidth: "300px",
                 minWidth: "200px",
                 marginLeft: "auto",
                 marginRight: "20px",
-                width: `${200 / productsPerLine}%`,
+                width: `${200 / fruitsPerLine}%`,
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 display: "flex",
                 flexDirection: "column",
@@ -79,42 +80,42 @@ const ProductList = () => {
             >
               <CardMedia
                 component="img"
-                alt={product.name}
+                alt={fruit.name}
                 height="200"
-                image={"http://localhost:3000/" + product.img_url}
-                title={product.name}
+                image={"http://localhost:3000/" + fruit.img_url}
+                title={fruit.name}
               />
               <CardContent style={{ flex: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {product.name}
+                  {fruit.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Variété: {product.variety}
+                  Variété: {fruit.variety}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Origine : {product.origin}
+                  Origine : {fruit.origin}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Description: {product.description}
+                  Description: {fruit.description}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Prix : {product.price} €
+                  Prix : {fruit.price} €
                 </Typography>
               </CardContent>
               <div
@@ -127,7 +128,7 @@ const ProductList = () => {
               >
               <Button
                 component={Link}
-                to={`/product/${product.id}`}
+                to={`/product/${fruit.id}`}
                 variant="contained"
                 style={{
                   backgroundColor: "#DEDEDE",
@@ -142,7 +143,7 @@ const ProductList = () => {
               </Button>
 
                 <Button
-                  onClick={() => AddProductToCart(product.id)}
+                  onClick={() => AddProductToCart(fruit.id)}
                   variant="contained"
                   color="primary"
                   size="small"
@@ -158,7 +159,7 @@ const ProductList = () => {
           ))}
       </div>
       <Pagination
-        count={Math.ceil(products.length / productsPerPage)}
+        count={Math.ceil(fruits.length / fruitsPerPage)}
         page={page}
         onChange={handlePageChange}
         renderItem={renderPaginationItem}
@@ -167,4 +168,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default FruitsPage;
