@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AddProductfetch } from "../services/productService";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetProductfetch, EditProductfetch } from "../services/productService";
 import Cookies from "js-cookie";
 import {
   Box,
@@ -11,8 +11,9 @@ import {
   Input,
 } from "@mui/material";
 
-const AddProductForm = () => {
-  const navigate = useNavigate(); // Initialisez le hook useNavigate
+const EditProductForm = () => {
+  const navigate = useNavigate();
+  const { productId } = useParams();
   const [productData, setProductData] = useState({
     name: "",
     price: "",
@@ -20,11 +21,22 @@ const AddProductForm = () => {
     origin: "",
     variety: "",
     image: null,
-    isAdmin: Cookies.get("useradmin"),
   });
-  const [, setSubmitting] = useState(false);
-  const [, setError] = useState(null);
-  const [, setSuccess] = useState(false);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await GetProductfetch(productId);
+        setProductData(response);
+      } catch (error) {
+        console.error("Erreur lors de la récupération du produit :", error);
+      }
+    };
+
+    fetchProduct(); // Appel de la fonction fetchProduct ici
+  }, [productId]); // productId est ajouté au tableau de dépendances
+  console.log(productData);
+  const isAdmin = Cookies.get("useradmin") === "true";
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -43,23 +55,17 @@ const AddProductForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setSubmitting(true);
-    setError(null);
-    setSuccess(false);
-
     try {
-      console.log("Données du produit:", productData);
-      await AddProductfetch(productData);
-      console.log("Produit ajouté avec succès.");
-      setSuccess(true);
-      navigate("/admin/products"); // Redirection vers la page AdminProduct
+      await EditProductfetch(productId, productData, isAdmin);
+      console.log("Produit mis à jour avec succès.");
+      navigate("/admin/products");
     } catch (error) {
-      setError(error.message);
-    } finally {
-      setSubmitting(false);
+      console.error("Erreur lors de la mise à jour du produit :", error);
+      console.log(productData);
+      console.log(productId);
     }
   };
-  console.log(productData);
+
   return (
     <Box
       display="flex"
@@ -73,8 +79,9 @@ const AddProductForm = () => {
           sx={{ fontWeight: "bold" }}
           align="center"
           gutterBottom
+          value={productData.name}
         >
-          Ajouter un produit
+          Modifier le produit
         </Typography>
         <FormControl margin="normal" fullWidth>
           <InputLabel>Nom</InputLabel>
@@ -119,19 +126,14 @@ const AddProductForm = () => {
           />
         </FormControl>
         <FormControl margin="normal" fullWidth>
-          <Input
-            type="file"
-            id="image-upload"
-            onChange={handleFileChange}
-            required
-          />
+          <Input type="file" id="image-upload" onChange={handleFileChange} />
         </FormControl>
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Créer le produit
+          Enregistrer les modifications
         </Button>
       </form>
     </Box>
   );
 };
 
-export default AddProductForm;
+export default EditProductForm;
