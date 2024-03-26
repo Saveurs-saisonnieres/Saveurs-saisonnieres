@@ -6,7 +6,7 @@ export function GetProducts() {
   return axios.get(API_URL_PRODUCTS);
 }
 
-export async function GetProductDatafetch(productId) {
+export async function GetProductfetch(productId) {
   try {
     const response = await axios.get(`${API_URL_PRODUCTS}/${productId}`);
     return response.data;
@@ -73,6 +73,75 @@ export async function AddProductfetch(productData) {
   }
 }
 
+export async function EditProductfetch(productId, updatedProductData, isAdmin) {
+  try {
+    // Créer un FormData pour les données du produit
+    const formData = new FormData();
+    formData.append("name", updatedProductData.name);
+    formData.append("price", updatedProductData.price);
+    formData.append("description", updatedProductData.description);
+    formData.append("origin", updatedProductData.origin);
+    formData.append("variety", updatedProductData.variety);
+
+    // Vérifier si une nouvelle image est fournie
+    if (updatedProductData.image) {
+      formData.append("image", updatedProductData.image);
+    }
+
+    // Mettre à jour les données du produit en envoyant une requête PUT
+    const productResponse = await axios.put(
+      `${API_URL_PRODUCTS}/${productId}`,
+      formData,
+      {
+        params: {
+          isAdmin: isAdmin,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: Cookie.get("token"),
+        },
+        product: {
+          name: updatedProductData.name,
+          price: updatedProductData.price,
+          description: updatedProductData.description,
+          origin: updatedProductData.origin,
+          variety: updatedProductData.variety,
+        },
+      }
+    );
+
+    // Si une nouvelle image est fournie, mettre à jour l'image associée en envoyant une requête PATCH
+    if (updatedProductData.image) {
+      const imageId = productResponse.data.id; // Remplacez product_image_id par l'attribut approprié contenant l'ID de l'image dans la réponse
+
+      const imageFormData = new FormData();
+      imageFormData.append("image", updatedProductData.image);
+
+      const imageResponse = await axios.put(
+        `${API_URL_PRODUCTS}/${productId}/product_images/${imageId}`,
+        imageFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: Cookie.get("token"),
+          },
+          params: {
+            isAdmin: isAdmin,
+          },
+        }
+      );
+
+      console.log("Image updated successfully:", imageResponse);
+      return productResponse;
+    } else {
+      throw new Error("La mise à jour du produit a échoué.");
+    }
+  } catch (error) {
+    console.error("Error editing product:", error);
+    throw error;
+  }
+}
+
 export async function DeleteProductfetch(productId, isAdmin) {
   try {
     const response = await axios.delete(`${API_URL_PRODUCTS}/${productId}`, {
@@ -84,40 +153,10 @@ export async function DeleteProductfetch(productId, isAdmin) {
       },
     });
     console.log("Produit supprimé avec succès.");
+    console.log(response);
     return response;
   } catch (error) {
     console.error("Erreur lors de la suppression du produit:", error);
     throw new Error("La suppression du produit a échoué.");
-  }
-}
-
-export async function EditProduct(productId, updatedProductData, isAdmin) {
-  const formData = new FormData();
-  formData.append("name", updatedProductData.name);
-  formData.append("price", updatedProductData.price);
-  formData.append("description", updatedProductData.description);
-  formData.append("origin", updatedProductData.origin);
-  formData.append("variety", updatedProductData.variety);
-  formData.append("image", updatedProductData.image);
-  formData.append("isAdmin", isAdmin);
-
-  try {
-    const response = await axios.put(
-      `http://localhost:3000/products/${productId}`,
-      formData,
-      {
-        params: {
-          isAdmin: isAdmin,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("Produit édité avec succès.");
-    return response;
-  } catch (error) {
-    console.error("Erreur lors de l'édition du produit:", error);
-    throw new Error("L'édition du produit a échoué.");
   }
 }
