@@ -16,9 +16,8 @@ import { LoginFetch } from "../services/authService";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 
-import Logo from '../assets/images/LogoLog.svg'; 
-import Fonregister from '../assets/images/Fonregister.jpg';
-
+import Logo from "../assets/images/LogoLog.svg";
+import Fonregister from "../assets/images/Fonregister.jpg";
 
 export default function LoginForm() {
   const emailRef = useRef("");
@@ -32,14 +31,12 @@ export default function LoginForm() {
 
     try {
       const { data, headers } = await LoginFetch(email, password);
-      console.log(data);
       const user = data.user;
-      localStorage.setItem("useradmin", user.admin);
+      Cookies.set("useradmin", user.admin);
       const token = headers.authorization;
       Cookies.set("token", token);
-      dispatch(login(token));
+      dispatch(login({ token: token, isAdmin: user.admin }));
       console.log("Successfully logged in : ", data.message);
-      // window.location.href = '/';
     } catch (error) {
       console.error("Failed to login:", error.message);
     }
@@ -56,7 +53,7 @@ export default function LoginForm() {
           md={7}
           sx={{
             backgroundImage: `url(${Fonregister})`,
-            backgroundRepeat: 'no-repeat',
+            backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
                 ? t.palette.grey[50]
@@ -119,7 +116,12 @@ export default function LoginForm() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: '#afb42b', '&:hover': { bgcolor: '#828A0E' } }}
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  bgcolor: "#afb42b",
+                  "&:hover": { bgcolor: "#828A0E" },
+                }}
               >
                 Sign In
               </Button>
