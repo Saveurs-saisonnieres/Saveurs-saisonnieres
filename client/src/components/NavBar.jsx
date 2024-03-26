@@ -14,31 +14,33 @@ function NavBar() {
         <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center', mt: 5 }}>
           <LogoHome />
           
-          <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-            <div style ={{ marginRight: 800,paddingBottom: 30  }}>
-            <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2, color: 'white'}}>Légumes</Button>
-            <Button component={Link} to="/fruits" color="inherit" sx={{ marginRight: 2, color: 'white' }}>Fruits</Button>
-            <Button component={Link} to="/panier" color="inherit" sx={{ marginRight: 2, color: 'white' }}>Panier</Button>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+            <div style={{ marginRight: 200 }}>
+              <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white' }}>Légumes</Button>
+              <Button component={Link} to="/fruits" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white'}}>Fruits</Button>
+              <Button component={Link} to="/panier" color="inherit" sx={{ marginRight: 80, paddingBottom: 4, color: 'white' }}>Panier</Button>
             </div>
-            <ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} />
-            <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
-            <Button 
-              component={Link}
-              to=""
-              variant="text"
-              color="inherit"
-              sx={{
-                marginTop: -5,
-                marginRight: 20,
-                bgcolor: '#FFFFFF',
-                color: '#000000',
-                '&:hover': {
-                  bgcolor: '#E5E5E5', 
-                },
-              }}
-            >
-              Se déconnecter
-            </Button>
+            <>
+              <ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} />
+              <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
+              <Button 
+                component={Link}
+                to=""
+                variant="text"
+                color="inherit"
+                sx={{
+                  marginTop: -5,
+                  marginRight: 20,
+                  bgcolor: '#FFFFFF',
+                  color: '#000000',
+                  '&:hover': {
+                    bgcolor: '#E5E5E5', 
+                  },
+                }}
+              >
+                Se déconnecter
+              </Button>
+            </>
           </div>
         </Toolbar>
       </AppBar>

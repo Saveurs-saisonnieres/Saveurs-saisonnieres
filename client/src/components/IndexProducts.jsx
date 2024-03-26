@@ -8,14 +8,14 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AddProductToCart } from "../services/cartServices";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const productsPerPage = 9; 
-  const productsPerLine = 3; 
+  const productsPerPage = 12;
+  const productsPerLine = 4;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,44 +43,119 @@ const ProductList = () => {
   );
 
   return (
-    <div style={{ margin: "0 300px", padding: "100px", display: "flex", flexDirection: "column", alignItems: "center"}}> 
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginBottom: "20px"}}>
-        {products.slice((page - 1) * productsPerPage, page * productsPerPage).map((product, index) => (
-          <Card key={product.id} style={{ marginBottom: "20px", maxWidth: "300px", minWidth: "200px", marginLeft: "auto", marginRight: "auto", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", width: `${100 / productsPerLine}%` }}>
-            <CardMedia
-              component="img"
-              alt={product.name}
-              height="200"
-              image={"http://localhost:3000/" + product.img_url}
-              title={product.name}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {product.name}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Variety: {product.variety}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Origin: {product.origin}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Description: {product.description}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Price: {product.price}
-              </Typography>
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                <Button component={Link} to={`/product/${product.id}`} variant="contained" color="primary" size="small">
-                  Voir détails
-                </Button>
-                <Button onClick={() => AddProductToCart(product.id)} variant="contained" color="secondary" size="small">
-                  <ShoppingCartIcon />
+    <div
+      style={{
+        margin: "0 300px",
+        padding: "100px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
+      >
+        {products
+          .slice((page - 1) * productsPerPage, page * productsPerPage)
+          .map((product, index) => (
+            <Card
+              key={product.id}
+              style={{
+                marginBottom: "50px",
+                maxWidth: "300px",
+                minWidth: "200px",
+                marginLeft: "auto",
+                marginRight: "20px",
+                width: `${200 / productsPerLine}%`,
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <CardMedia
+                component="img"
+                alt={product.name}
+                height="200"
+                image={"http://localhost:3000/" + product.img_url}
+                title={product.name}
+              />
+              <CardContent style={{ flex: 1 }}>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {product.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  Variété: {product.variety}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  Origine : {product.origin}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  Description: {product.description}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  Prix : {product.price} €
+                </Typography>
+              </CardContent>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center", 
+                  padding: "10px", 
+                }}
+              >
+              <Button
+                component={Link}
+                to={`/product/${product.id}`}
+                variant="contained"
+                style={{
+                  backgroundColor: "#DEDEDE",
+                  color: "black",
+                  "&:hover": {
+                    backgroundColor: "#BFBFBF"
+                  }
+                }}
+                size="small"
+              >
+                Détails
+              </Button>
+
+                <Button
+                  onClick={() => AddProductToCart(product.id)}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  style={{
+                    borderRadius: "5px",
+                    marginLeft: "auto", 
+                  }}
+                >
+                  <ShoppingCartIcon style={{ color: "white" }} />
                 </Button>
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </Card>
+          ))}
       </div>
       <Pagination
         count={Math.ceil(products.length / productsPerPage)}

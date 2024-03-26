@@ -1,5 +1,8 @@
+// AddProductForm.jsx
+
 import { useState } from "react";
 import { AddProductfetch } from "../services/productService";
+import { Select, MenuItem, TextField, Button, Grid, Typography, Container, Box } from "@mui/material";
 
 const AddProductForm = () => {
   const [productData, setProductData] = useState({
@@ -8,7 +11,8 @@ const AddProductForm = () => {
     description: "",
     origin: "",
     variety: "",
-    image: null, // Modifier image en image
+    category: "",
+    image: null,
     isAdmin: localStorage.getItem("useradmin") === "true" ? true : false,
   });
   const [, setSubmitting] = useState(false);
@@ -26,7 +30,7 @@ const AddProductForm = () => {
   const handleFileChange = (event) => {
     setProductData({
       ...productData,
-      image: event.target.files[0], // Modifier image en image
+      image: event.target.files[0],
     });
   };
 
@@ -37,7 +41,7 @@ const AddProductForm = () => {
     setSuccess(false);
 
     try {
-      console.log("Données du produit:", productData);
+      console.log("Product data:", productData);
       await AddProductfetch(productData);
       setSuccess(true);
     } catch (error) {
@@ -46,58 +50,87 @@ const AddProductForm = () => {
       setSubmitting(false);
     }
   };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nom:</label>
-        <input
-          type="text"
-          name="name"
-          value={productData.name}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Prix:</label>
-        <input
-          type="number"
-          name="price"
-          value={productData.price}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Description:</label>
-        <textarea
-          name="description"
-          value={productData.description}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Origine:</label>
-        <input
-          type="text"
-          name="origin"
-          value={productData.origin}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Variété:</label>
-        <input
-          type="text"
-          name="variety"
-          value={productData.variety}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Image:</label>
-        <input type="file" onChange={handleFileChange} />
-      </div>
-      <button type="submit">Créer le produit</button>
-    </form>
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 3, pb: 5 }}>
+        <Typography variant="h4" gutterBottom>Créer un nouveau produit</Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nom"
+                type="text"
+                name="name"
+                value={productData.name}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Prix"
+                type="number"
+                name="price"
+                value={productData.price}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={4}
+                name="description"
+                value={productData.description}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Origine"
+                type="text"
+                name="origin"
+                value={productData.origin}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Variété"
+                type="text"
+                name="variety"
+                value={productData.variety}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>Catégorie</Typography>
+              <Select
+                fullWidth
+                label="Catégorie"
+                value={productData.category}
+                onChange={(event) => setProductData({ ...productData, category: event.target.value })}
+              >
+                <MenuItem value="Fruits">Fruits</MenuItem>
+                <MenuItem value="Légumes">Légumes</MenuItem>
+                <MenuItem value="Paniers">Paniers</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <input type="file" onChange={handleFileChange} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary">Créer le produit</Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Container>
   );
 };
 
