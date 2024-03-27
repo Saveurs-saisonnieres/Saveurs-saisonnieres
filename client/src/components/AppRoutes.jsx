@@ -6,13 +6,12 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import EditPasswordPage from "../pages/EditPasswordPage";
 import ShowCart from "../pages/ShowCart";
 import ShowProduct from "./ShowProduct";
-import IndexProducts from "./IndexProducts";
 import AdminProduct from "../pages/AdminProduct";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
-// import LegumesPage from "../pages/LegumesPage";
-// import FruitsPage from "../pages/FruitsPage";
-import SuccessPayment from "../pages/SuccessPayment"; 
+import LegumesPage from "../pages/LegumesPage";
+import FruitsPage from "../pages/FruitsPage";
+import IndexProducts from "./IndexProducts";
 function AppRoutes() {
   return (
     <Routes>
