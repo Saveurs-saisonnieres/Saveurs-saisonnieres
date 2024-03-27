@@ -10,17 +10,16 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Box 
-} from "@mui/material";
-import {
+  Box,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper 
 } from "@mui/material";
+
 
 function AdminProduct() {
   const [products, setProducts] = useState([]);
@@ -31,7 +30,7 @@ function AdminProduct() {
 
   useEffect(() => {
     fetchProducts();
-    fetchOrders();
+    // fetchOrders();
   }, []);
 
   const fetchProducts = async () => {
@@ -164,7 +163,7 @@ function AdminProduct() {
         <Typography variant="h5" gutterBottom>
           Commandes :
         </Typography>
-        <Button variant="contained" onClick={fetchOrders} sx={{ marginRight: 1, marginBottom: 2 }}>
+        <Button variant="contained"  sx={{ marginRight: 1, marginBottom: 2 }}>
           Rafraîchir
         </Button>
         <TableContainer component={Paper}>
