@@ -29,8 +29,9 @@ function AppRoutes() {
         path="/admin/products/edit/:productId"
         element={<EditProductForm />}
       />
-      <Route path="/legumes" element={<LegumesPage />} />
-      <Route path="/fruits" element={<FruitsPage />} />
+      {/* <Route path="/legumes" element={<LegumesPage />} />
+      <Route path="/fruits" element={<FruitsPage />} /> */}
+      <Route path="payment/success" element={<SuccessPayment />} />
     </Routes>
   );
 }

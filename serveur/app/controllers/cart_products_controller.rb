@@ -21,7 +21,17 @@ class CartProductsController < ApplicationController
       render json: { errors: cart_product.errors.full_messages }, status: :unprocessable_entity
     end
   end
-  
+
+  def update
+    cart_product = CartProduct.find(params[:id])
+    
+    if cart_product.update(cart_product_params)
+      render json: { message: 'Cart product updated successfully' }, status: :ok
+    else
+      render json: { errors: cart_product.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     product = Product.find(params[:productId])
     cart = current_user.cart
@@ -39,6 +49,6 @@ class CartProductsController < ApplicationController
   end
   
   def cart_product_params
-    params.require(:cart_product).permit(:product_id, :quantity)
+    params.require(:cart_product).permit(:product_id, :quantity, :id)
   end
 end

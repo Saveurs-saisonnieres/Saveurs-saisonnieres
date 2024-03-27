@@ -10,8 +10,8 @@ export async function GetCart() {
       }
     });
 
-    console.log('Cart:', response.data);
-    return response.data; 
+    console.log('Cart:', response);
+    return response; 
   } catch (error) {
     console.error('Error fetching cart:', error);
     throw error; 
@@ -19,7 +19,7 @@ export async function GetCart() {
 }
 export async function AddProductToCart(productId) {
   try {
-    const response = await axios.post("http://localhost:3000/add_to_cart", {
+    const response = await axios.post("http://localhost:3000/cart_products", {
       productId: productId // Envoyer l'ID du produit dans le corps de la requête
     },
     {
@@ -43,6 +43,9 @@ export async function RemoveFromCart(productId) {
       headers: {
         "Content-Type": "application/json",
         Authorization: Cookie.get("token")
+      },
+      params: {
+        productId: productId
       }
     });
 
