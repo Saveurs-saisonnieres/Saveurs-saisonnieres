@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Button, Typography, Card, CardContent, CardMedia, Grid } from "@mui/material";
+import { AddShoppingCart } from "@mui/icons-material";
 import { AddProductToCart } from "../services/cartServices";
 
 const ShowProduct = () => {
@@ -10,11 +12,8 @@ const ShowProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/products/${id}`
-        );
+        const response = await axios.get(`http://localhost:3000/products/${id}`);
         setProduct(response.data);
-        console.log("Product:", response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -23,25 +22,52 @@ const ShowProduct = () => {
   }, [id]);
 
   return (
-    <div>
-      <h2>Product Details</h2>
+    <div style={{ paddingTop: 100, paddingLeft: 400, paddingRight: 400, paddingBottom: 100 }}>
+      <Typography variant="h2" gutterBottom>
+        {product.name}
+      </Typography>
       {product && (
-        <div>
-          <h3>{product.name}</h3>
-          <p>Price: {product.price}</p>
-          <p>Description: {product.description}</p>
-          <p>Origin: {product.origin}</p>
-          <p>Variety: {product.variety}</p>
-          {product.img_url && (
-            <img
-              src={"http://localhost:3000/" + product.img_url}
-              alt="Product"
-            />
-          )}
-          <button onClick={() => AddProductToCart(product.id)}>
-            Add to cart
-          </button>
-        </div>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Card style={{ height: "80%" }}>
+              <CardMedia
+                component="img"
+                height="100%"
+                image={`http://localhost:3000/${product.img_url}`}
+                alt={product.name}
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6} md={8}>
+            <Card style={{ height: "80%" }}>
+              <CardContent>
+                <Typography variant="h3" gutterBottom>
+                  {product.name}
+                </Typography>
+                <Typography variant="h6" gutterBottom>
+                  Price: {product.price} €
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Description: {product.description}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Origin: {product.origin}
+                </Typography>
+                <Typography variant="body1" gutterBottom>
+                  Variety: {product.variety}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddShoppingCart />}
+                  onClick={() => AddProductToCart(product.id)}
+                >
+                  Add to Cart
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       )}
     </div>
   );
