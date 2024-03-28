@@ -37,6 +37,7 @@ export default function LoginForm() {
       Cookies.set("token", token);
       dispatch(login({ token: token, isAdmin: user.admin }));
       console.log("Successfully logged in : ", data.message);
+      window.location.href = "/products";
     } catch (error) {
       console.error("Failed to login:", error.message);
     }

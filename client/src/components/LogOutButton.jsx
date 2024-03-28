@@ -10,7 +10,8 @@ export default function LogOutButton() {
   const handleClick = async () => {
     try {
       await LogoutFetch();
-      dispatch(logout()); // Dispatch l'action de déconnexion
+      dispatch(logout());
+      
       console.log("Logged out successfully");
     } catch (error) {
       console.error('Failed to log out:', error.message);
@@ -20,8 +21,16 @@ export default function LogOutButton() {
     
   
   return (
-    <Button variant="outlined" onClick={handleClick}>
-      <Link to="/login">Log Out</Link>
+    <Button variant="outlined" onClick={handleClick} sx={{
+      marginTop: -5,
+      marginRight: 20,
+      bgcolor: '#FFFFFF',
+      color: '#000000',
+      '&:hover': {
+        bgcolor: '#E5E5E5', 
+      },
+    }}>
+      <Link to="/login">Se déconnecter</Link>
     </Button>
   );
 }

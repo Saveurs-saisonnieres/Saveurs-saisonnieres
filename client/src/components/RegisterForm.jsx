@@ -43,7 +43,7 @@ export default function RegisterForm() {
     try {
       const data = await RegisterFetch(email, password, firstName, lastName);
       console.log(data);
-      window.location.href = '/';
+      window.location.href = '/login';
     } catch (error) {
       alert('Failed to register: ' + error.message);
     }
