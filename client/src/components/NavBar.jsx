@@ -4,6 +4,7 @@ import LogoHome from './LogoHome';
 import { Link } from 'react-router-dom'; 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogOutButton from './LogOutButton';
 
 function NavBar() {
   const token = useSelector((state) => state.auth.token);
@@ -11,36 +12,22 @@ function NavBar() {
   return (
     <div style={{ marginTop: 50 }}>
       <AppBar position="static">
-        <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center', mt: 5 }}>
-          <LogoHome />
-          
-          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-            <div style={{ marginRight: 200 }}>
+        <Toolbar sx={{ alignItems: 'center', mt: 5 }}>
+          <div style={{ marginRight: 'auto', display: 'flex', alignItems: 'center' }}>
+            <LogoHome />
+            <div style={{ marginLeft: 230 }}>
               <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white' }}>Légumes</Button>
-              <Button component={Link} to="/fruits" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white'}}>Fruits</Button>
-              <Button component={Link} to="/panier" color="inherit" sx={{ marginRight: 80, paddingBottom: 4, color: 'white' }}>Panier</Button>
+              <Button component={Link} to="/fruits" color="inherit" sx={{ paddingBottom: 4, color: 'white'}}>Fruits</Button>
             </div>
-            <>
-              <ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} />
-              <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
-              <Button 
-                component={Link}
-                to=""
-                variant="text"
-                color="inherit"
-                sx={{
-                  marginTop: -5,
-                  marginRight: 20,
-                  bgcolor: '#FFFFFF',
-                  color: '#000000',
-                  '&:hover': {
-                    bgcolor: '#E5E5E5', 
-                  },
-                }}
-              >
-                Se déconnecter
-              </Button>
-            </>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {token && (
+              <>
+                <Link to="/cart"><ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} /></Link>
+                <Link to="/profil"><AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} /></Link>
+                <LogOutButton /> 
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>
