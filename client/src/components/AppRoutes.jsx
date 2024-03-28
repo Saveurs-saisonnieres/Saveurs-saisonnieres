@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../pages/HomePage";
@@ -16,9 +16,9 @@ import FruitsPage from "../pages/FruitsPage";
 import IndexProducts from "./IndexProducts";
 import SuccessPayment from "../pages/SuccessPayment";
 import NotFoundPage from "../pages/NotFoundPage";
-import NavBar from './NavBar'
-import Footer from './Footer'
-// import UserPage from "../pages/UserPage";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
+import UserPage from "../pages/UserPage";
 function AppRoutes() {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const [hideNav, setHideNav] = useState(false);
@@ -27,25 +27,31 @@ function AppRoutes() {
 
   useEffect(() => {
     const currentPath = location.pathname;
-    if (currentPath === '/') {
+    if (currentPath === "/") {
       setHideNav(true);
       setHideFooter(true);
-    } else if (currentPath === '/register' || currentPath === '/login') {
+    } else if (currentPath === "/register" || currentPath === "/login") {
       setHideNav(true);
       setHideFooter(true);
     } else {
       setHideNav(false);
       setHideFooter(false);
-  }}, [location]);
+    }
+  }, [location]);
 
   return (
     <>
       {!hideNav && <NavBar />}
       <Routes>
-        <Route path="/" element={<>
-          <HomePage />
-          {hideFooter && <Footer />}
-        </>} />
+        <Route
+          path="/"
+          element={
+            <>
+              <HomePage />
+              {hideFooter && <Footer />}
+            </>
+          }
+        />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/password/reset" element={<ResetPasswordPage />} />
@@ -67,7 +73,7 @@ function AppRoutes() {
         <Route path="/fruits" element={<FruitsPage />} />
         <Route path="/payment/success" element={<SuccessPayment />} />
         <Route path="*" element={<NotFoundPage />} />
-        {/* <Route path="/profil" element={<UserPage />} /> */}
+        <Route path="/profil" element={<UserPage />} />
       </Routes>
       {!hideFooter && <Footer />}
     </>
