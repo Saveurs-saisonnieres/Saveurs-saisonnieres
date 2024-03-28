@@ -79,7 +79,7 @@ export default function LoginForm() {
               style={{ width: "200px", height: "auto", marginBottom: 20 }}
             />
             <Typography component="h1" variant="h5">
-              Sign in
+              Connexion
             </Typography>
             <Box
               component="form"
@@ -92,7 +92,7 @@ export default function LoginForm() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -111,7 +111,7 @@ export default function LoginForm() {
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label="Se souvenir de moi"
               />
               <Button
                 type="submit"
@@ -129,12 +129,12 @@ export default function LoginForm() {
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
-                    Forgot password?
+                    Mot de passe oublié ?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="register" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Pas de compte ? S'enregistrer"}
                   </Link>
                 </Grid>
               </Grid>

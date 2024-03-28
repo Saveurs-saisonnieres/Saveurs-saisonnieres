@@ -1,8 +1,6 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -79,7 +77,7 @@ export default function RegisterForm() {
           >
             <img src={Logo} alt="Logo" style={{ width: '200px', height: 'auto', marginBottom: 20 }} />
             <Typography component="h1" variant="h5">
-              Sign up
+              Inscription
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
@@ -90,7 +88,7 @@ export default function RegisterForm() {
                     required
                     fullWidth
                     id="firstName"
-                    label="First Name"
+                    label="Prénom"
                     inputRef={firstNameRef}
                     autoFocus
                   />
@@ -100,7 +98,7 @@ export default function RegisterForm() {
                     required
                     fullWidth
                     id="lastName"
-                    label="Last Name"
+                    label="Nom de famille"
                     name="lastName"
                     inputRef={lastNameRef}
                     autoComplete="family-name"
@@ -111,7 +109,7 @@ export default function RegisterForm() {
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label="Email"
                     name="email"
                     inputRef={emailRef}
                     autoComplete="email"
@@ -134,17 +132,11 @@ export default function RegisterForm() {
                     required
                     fullWidth
                     name="password confirmation"
-                    label="Password Confirmation"
+                    label="Confirmation du mot de passe"
                     type="password"
                     id="password-confirmation"
                     inputRef={confirmPasswordRef}
                     autoComplete="new-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
                   />
                 </Grid>
               </Grid>
@@ -159,7 +151,7 @@ export default function RegisterForm() {
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="login" variant="body2">
-                    Already have an account? Sign in
+                    Tu as déjà un compte ? Connecte toi
                   </Link>
                 </Grid>
               </Grid>
