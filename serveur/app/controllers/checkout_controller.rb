@@ -20,8 +20,8 @@ class CheckoutController < ApplicationController
       ],
       mode: 'payment',
       customer_email: current_user.email,
-      success_url: 'http://localhost:5173/payment/success#session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:5173/payment/cancel',
+      success_url: 'https://saveurs-saisonnieres.vercel.app/payment/success#session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://saveurs-saisonnieres.vercel.app/payment/cancel',
     )
 
     # Assigner l'ID de session à la métadonnée après avoir créé la session

@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:3000/"
-export const API_URL_USERS = "http://localhost:3000/users"
-export const API_URL_PRODUCTS = "http://localhost:3000/products"
-export const API_URL_CART = "http://localhost:3000/cart"
+export const API_URL = "https://serveur.fly.dev/"
+export const API_URL_USERS = "https://serveur.fly.dev/users"
+export const API_URL_PRODUCTS = "https://serveur.fly.dev/products"
+export const API_URL_CART = "https://serveur.fly.dev/cart"

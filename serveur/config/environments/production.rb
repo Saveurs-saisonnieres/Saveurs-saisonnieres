@@ -7,7 +7,7 @@ Rails.application.configure do
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV['MAILJET_NORMAL_KEY'],
     :password => ENV['MAILJET_SECRET_KEY'],
-    :domain => 'http://127.0.0.1:3000/',
+    :domain => 'https://serveur.fly.dev/',
     :address => 'in-v3.mailjet.com',
     :port => 587,
     :authentication => :plain,
