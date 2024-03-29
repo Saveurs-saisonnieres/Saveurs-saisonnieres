@@ -25,12 +25,11 @@ export default function LoginForm() {
       const token = headers.authorization;
 
       Cookies.set("token", token);
-      dispatch(login({ token: token, isAdmin: user.admin }));
-
       if (user.admin) {
         Cookies.set("useradmin", user.admin);
         console.log("Successfully logged in as admin: ", data.message);
         window.location.href = "/admin/products";
+        dispatch(login({ token: token, isAdmin: true }));
       } else {
         dispatch(login({ token: token, isAdmin: false }));
         console.log("Successfully logged in as non-admin: ", data.message);
