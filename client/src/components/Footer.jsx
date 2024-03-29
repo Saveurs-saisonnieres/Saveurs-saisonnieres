@@ -16,8 +16,8 @@ function Footer() {
       <Box>
         <Typography variant="h6" sx={{ fontWeight: 'bold'}}  gutterBottom>Lien utiles:</Typography>
         <Typography variant="body1" gutterBottom><Link sx={{ color: 'white' }} href="/legal-notice">Mentions légales</Link></Typography>
-        <Typography variant="body1" gutterBottom><Link sx={{ color: 'white' }} href="/cgu">CGU / CGV</Link></Typography>
-        <Typography variant="body1" gutterBottom><Link sx={{ color: 'white' }} href="/privacy">Politique de confidentialité</Link></Typography>
+        <Typography variant="body1" gutterBottom><Link sx={{ color: 'white' }} href="/cgu-cgv">CGU / CGV</Link></Typography>
+        <Typography variant="body1" gutterBottom><Link sx={{ color: 'white' }} href="/privacy-policy">Politique de confidentialité</Link></Typography>
       </Box>
 
       {/* Colonne 2: Suivez nous */}
