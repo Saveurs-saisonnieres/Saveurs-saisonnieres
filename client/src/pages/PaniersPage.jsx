@@ -1,54 +1,43 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Button, Typography, Card, CardContent, CardMedia } from "@mui/material";
+import { AddShoppingCart } from "@mui/icons-material";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-import { AddProductToCart } from "../services/cartServices";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { API_URL } from "../constants";
 import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
+import { AddProductToCart } from "../services/cartServices";
+import { API_URL } from "../constants";
 
-const FruitsPage = () => {
-  const [fruits, setFruits] = useState([]);
+const PanierPage = () => {
+  const [panierProducts, setPanierProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const fruitsPerPage = 12;
-  const fruitsPerLine = 4;
+  const [open, setOpen] = useState(false);
+  const productsPerPage = 9;
+  const productsPerLine = 3;
 
   useEffect(() => {
-    const fetchFruits = async () => {
+    const fetchPanierProducts = async () => {
       try {
-        const response = await axios.get(`${API_URL}/products?categorie=Fruits`);
-        const fruitProducts = response.data.filter(product => product.categorie === "Fruits")
-        setFruits(fruitProducts);
-        console.log(fruitProducts);
+        const response = await axios.get(`${API_URL}/products?categorie=Paniers`);
+        console.log(response.data);
+        const panierProducts = response.data.filter(product => product.categorie === "Paniers");
+        console.log(panierProducts);
+        setPanierProducts(panierProducts);
       } catch (error) {
-        console.error("Error fetching fruits:", error);
+        console.error("Error fetching panier products:", error);
       }
     };
 
-    fetchFruits();
+    fetchPanierProducts();
   }, []);
 
   const handlePageChange = (event, value) => {
     setPage(value);
   };
-
-  const renderPaginationItem = (item) => (
-    <PaginationItem
-      component={Link}
-      to={`/fruits?page=${item.page}`}
-      {...item}
-    />
-  );
 
   const handleOpenModal = (product) => {
     setSelectedProduct(product);
@@ -57,8 +46,15 @@ const FruitsPage = () => {
 
   const handleCloseModal = () => {
     setOpen(false);
-    setSelectedProduct(null);
   };
+
+  const renderPaginationItem = (item) => (
+    <PaginationItem
+      component={Link}
+      to={`/paniers?page=${item.page}`}
+      {...item}
+    />
+  );
 
   return (
     <div
@@ -78,18 +74,18 @@ const FruitsPage = () => {
           marginBottom: "20px",
         }}
       >
-        {fruits
-          .slice((page - 1) * fruitsPerPage, page * fruitsPerPage)
-          .map((fruit) => (
+        {panierProducts
+          .slice((page - 1) * productsPerPage, page * productsPerPage)
+          .map((product) => (
             <Card
-              key={fruit.id}
+              key={product.id}
               style={{
                 marginBottom: "50px",
                 maxWidth: "300px",
                 minWidth: "200px",
                 marginLeft: "auto",
                 marginRight: "20px",
-                width: `${200 / fruitsPerLine}%`,
+                width: `${200 / productsPerLine}%`,
                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                 display: "flex",
                 flexDirection: "column",
@@ -97,42 +93,28 @@ const FruitsPage = () => {
             >
               <CardMedia
                 component="img"
-                alt={fruit.name}
+                alt={product.name}
                 height="200"
-                image={API_URL + fruit.img_url}
-                title={fruit.name}
+                image={`${API_URL}${product.img_url}`}
+                title={product.name}
               />
               <CardContent style={{ flex: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {fruit.name}
+                  {product.name}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Variété: {fruit.variety}
+                  Description: {product.description}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                 >
-                  Origine : {fruit.origin}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                >
-                  Description: {fruit.description}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                >
-                  Prix : {fruit.price} €
+                  Prix : {product.price} €
                 </Typography>
               </CardContent>
               <div
@@ -144,21 +126,22 @@ const FruitsPage = () => {
                 }}
               >
                 <Button
-                  onClick={() => handleOpenModal(fruit)}
+                  onClick={() => handleOpenModal(product)}
                   variant="contained"
                   style={{
                     backgroundColor: "#DEDEDE",
                     color: "black",
                     "&:hover": {
-                      backgroundColor: "#BFBFBF"
-                    }
+                      backgroundColor: "#BFBFBF",
+                    },
                   }}
                   size="small"
                 >
                   Détails
                 </Button>
+
                 <Button
-                  onClick={() => AddProductToCart(fruit.id)}
+                  onClick={() => AddProductToCart(product.id)}
                   variant="contained"
                   color="primary"
                   size="small"
@@ -167,14 +150,14 @@ const FruitsPage = () => {
                     marginLeft: "auto",
                   }}
                 >
-                  <ShoppingCartIcon style={{ color: "white" }} />
+                  <AddShoppingCart style={{ color: "white" }} />
                 </Button>
               </div>
             </Card>
           ))}
       </div>
       <Pagination
-        count={Math.ceil(fruits.length / fruitsPerPage)}
+        count={Math.ceil(panierProducts.length / productsPerPage)}
         page={page}
         onChange={handlePageChange}
         renderItem={renderPaginationItem}
@@ -211,24 +194,18 @@ const FruitsPage = () => {
                     {selectedProduct.name}
                   </Typography>
                   <Typography variant="h6" gutterBottom>
-                    Prix: {selectedProduct.price} €
+                    Price: {selectedProduct.price} €
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     Description: {selectedProduct.description}
                   </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Origine: {selectedProduct.origin}
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    Variété: {selectedProduct.variety}
-                  </Typography>
                   <Button
                     variant="contained"
                     color="primary"
-                    startIcon={<ShoppingCartIcon />}
+                    startIcon={<AddShoppingCart />}
                     onClick={() => AddProductToCart(selectedProduct.id)}
                   >
-                    Ajouter au panier
+                    Add to Cart
                   </Button>
                 </CardContent>
               </Card>
@@ -240,4 +217,4 @@ const FruitsPage = () => {
   );
 };
 
-export default FruitsPage;
+export default PanierPage;
