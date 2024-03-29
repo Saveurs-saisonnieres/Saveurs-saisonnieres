@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { API_URL } from '../constants';
+import { Typography, Box } from '@mui/material';
 const SuccessPayment = () => {
-  const [message, setMessage] = useState('');
+  const [setMessage] = useState('');
   const [isFetched, setIsFetched] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const SuccessPayment = () => {
             headers: {
               Authorization: Cookies.get('token'),
             },
-          });
+          });          
           setMessage(response.data.message);
           setIsFetched(true);
         } catch (error) {
@@ -31,13 +32,20 @@ const SuccessPayment = () => {
       };
       fetchData();
     }
-  }, [isFetched]); 
+  }, [isFetched]);
 
   return (
-    <div>
-      <h2>Payment Successful</h2>
-      <p>{message}</p>
-    </div>
+    <Box sx={{ padding: 40, textAlign: 'center'}}>
+      <Typography variant="h4" gutterBottom>
+        Paiment Validé
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        Rendez-vous dans 1h au magasin, 14 rue des étoiles 34 000 Montpellier 
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+       À très vite ! 
+      </Typography>
+    </Box>
   );
 };
 

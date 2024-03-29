@@ -121,7 +121,7 @@ export default function LoginForm() {
                   "&:hover": { bgcolor: "#828A0E" },
                 }}
               >
-                Sign In
+                Connexion
               </Button>
               <Grid container>
                 <Grid item xs>
