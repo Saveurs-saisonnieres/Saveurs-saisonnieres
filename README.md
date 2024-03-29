@@ -1,4 +1,7 @@
 # Saveurs Saisonnières
+
+/home/spooker/projet-html-css/THP/dev++/semaine_11_et_12/Saveurs-saisonnieres/client/src/assets/images/LogoLog.svg
+
 Seasonal Flavors is a web application that allows users to order their fruits, vegetables, and gift baskets online for pickup at the store.
 
 ## Features
@@ -30,6 +33,13 @@ Seasonal Flavors is a web application that allows users to order their fruits, v
 
 ## Configuration 
 * Make sure you have Ruby, Rails, and Node.js installed on your system.
+
+## Credits
+This project was developed by the following contributors:
+
+* [Lalaina](https://github.com/R4ja34)
+* [Grégory](https://github.com/GregMagnat)
+* [Louis](https://github.com/LouisKzy)
 
 * Clone this repository to your local machine ```git clone https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres```.
 
