@@ -1,10 +1,10 @@
 import axios from "axios";
-import { API_URL } from "../constants";
+import { API_URL_USERS } from "../constants";
 import Cookie from "js-cookie";
 
 async function ShowUser() {
   try {
-    const response = await axios.get(API_URL + `/show/`, {
+    const response = await axios.get(API_URL_USERS + `/show/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: Cookie.get("token"),
@@ -20,7 +20,7 @@ async function ShowUser() {
 
 async function UpdateUser(userId, userData) {
   try {
-    const response = await axios.patch(API_URL + `/users/${userId}`, {
+    const response = await axios.patch(API_URL_USERS + `${userId}`, {
       user: userData,
     });
     return response.data;
@@ -33,7 +33,7 @@ async function UpdateUser(userId, userData) {
 
 async function DeleteUser(userId) {
   try {
-    const response = await axios.delete(API_URL + `/users/${userId}`);
+    const response = await axios.delete(API_URL_USERS + `${userId}`);
     return response.data;
   } catch (error) {
     throw new Error(

@@ -6,6 +6,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import { API_URL } from '../constants';
 
 const ShowCart = () => {
   const [cart, setCart] = useState(null);
@@ -44,7 +45,7 @@ const ShowCart = () => {
   
     try {
       const response = await axios.patch(
-        `http://localhost:3000/cart_products/${cartProductId}`, 
+        `${API_URL}/cart_products/${cartProductId}`, 
         { quantity: updatedCartProducts.find(item => item.product.id === productId).quantity },
         {
           headers: {
@@ -83,7 +84,7 @@ const ShowCart = () => {
 
   const handlePayment = async () => {
     try {
-      const response = await fetch('http://localhost:3000/checkout/create', {
+      const response = await fetch(`${API_URL}/checkout/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
