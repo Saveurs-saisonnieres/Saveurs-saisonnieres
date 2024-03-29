@@ -8,7 +8,7 @@ import ResetPasswordPage from "../pages/ResetPasswordPage";
 import EditPasswordPage from "../pages/EditPasswordPage";
 import ShowCart from "../pages/ShowCart";
 import ShowProduct from "./ShowProduct";
-import AdminProduct from "../pages/AdminProduct";
+import AdminPage from "../pages/AdminPage";
 import AddProductForm from "./AddProductForm";
 import EditProductForm from "./EditProductForm";
 import LegumesPage from "../pages/LegumesPage";
@@ -24,6 +24,7 @@ function AppRoutes() {
   const [hideNav, setHideNav] = useState(false);
   const [hideFooter, setHideFooter] = useState(false);
   const location = useLocation();
+  console.log(isAdmin);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -61,7 +62,7 @@ function AppRoutes() {
         <Route path="/products" element={<IndexProducts />} />
         {isAdmin && (
           <>
-            <Route path="/admin/products" element={<AdminProduct />} />
+            <Route path="/admin/page" element={<AdminPage />} />
             <Route path="/admin/products/add" element={<AddProductForm />} />
             <Route
               path="/admin/products/edit/:productId"

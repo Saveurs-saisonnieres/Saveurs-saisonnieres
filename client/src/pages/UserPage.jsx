@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField } from "@mui/material";
 import { ShowUser } from "../services/userService";
+import { format } from 'date-fns';
 
 function UserPage() {
   const [user, setUser] = useState(null);
@@ -24,31 +26,79 @@ function UserPage() {
   }
 
   return (
-    <div>
-      <h1>UserPage</h1>
+    <div style={{ padding: "100px 600px 100px 100px" }}>
+      <Typography variant="h3" component="h3" gutterBottom>
+        Votre profil utilisateur
+      </Typography>
       {user && (
-        <div>
-          <p>First Name: {user.first_name}</p>
-          <p>Last Name: {user.last_name}</p>
-          <p>Email: {user.email}</p>
-          <h2>Orders:</h2>
-          {user.orders.map((order) => (
-            <div key={order.id}>
-              <p>Order ID: {order.id}</p>
-              <p>Total Price: {order.total_price}</p>
-              <h3>Order Items:</h3>
-              {order.order_items.map((orderItem) => (
-                <div key={orderItem.id}>
-                  <p>Product ID: {orderItem.product_id}</p>
-                  <p>Quantity: {orderItem.quantity}</p>
-                </div>
-              ))}
-            </div>
-          ))}
+        <div style={{ paddingRight: "900px" }}>
+          <TextField
+            label="Prénom"
+            value={user.first_name}
+            InputProps={{
+              readOnly: true,
+            }}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            label="Nom"
+            value={user.last_name}
+            InputProps={{
+              readOnly: true,
+            }}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            label="Email"
+            value={user.email}
+            InputProps={{
+              readOnly: true,
+            }}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <Button variant="outlined" color="primary" sx={{ mt: 1 }}>Modifier</Button>
         </div>
+      )}
+      <Typography variant="h3" component="h3" gutterBottom sx={{ mt: 3 }}>
+        Commandes
+      </Typography>
+      {user && user.orders.length > 0 ? (
+        <TableContainer component={Paper} sx={{ mt: 0 }}>
+          <Table sx={{ minWidth: 450 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Numéro de commande</TableCell>
+                <TableCell>Date</TableCell>
+                {/* <TableCell>Heure</TableCell> */}
+                <TableCell>Coût</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {user.orders.map((order) => (
+                <TableRow key={order.id}>
+                  <TableCell>{order.id}</TableCell>
+                  <TableCell>{format(new Date(order.created_at), 'dd/MM/yyyy')}</TableCell>
+                  {/* <TableCell>{format(new Date(order.time), 'HH:mm')}</TableCell> */}
+                  <TableCell>{order.total_price}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Typography variant="body1" gutterBottom>
+          Aucune commande trouvée.
+        </Typography>
       )}
     </div>
   );
 }
 
 export default UserPage;
+

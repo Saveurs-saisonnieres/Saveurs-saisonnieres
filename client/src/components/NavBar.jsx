@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogOutButton from './LogOutButton';
 
 function NavBar() {
-  const token = useSelector((state) => state.auth.token);
+  const { token, isAdmin } = useSelector((state) => state.auth);
 
   return (
     <div style={{ marginTop: 50 }}>
@@ -24,7 +24,15 @@ function NavBar() {
             {token && (
               <>
                 <Link to="/cart"><ShoppingCartIcon sx={{ color: 'white', marginRight: 5, width: 40, height: 40, marginTop: -5 }} /></Link>
-                <Link to="/profil"><AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} /></Link>
+                {isAdmin ? (
+                  <Link to="/admin/page">
+                    <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
+                  </Link>
+                ) : (
+                  <Link to="/profil">
+                    <AccountCircleIcon sx={{ color: 'white', marginRight: 5, width: 50, height: 50, marginTop: -5 }} />
+                  </Link>
+                )}
                 <LogOutButton /> 
               </>
             )}

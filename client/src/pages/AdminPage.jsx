@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetProducts, DeleteProductfetch } from "../services/productService";
-// import { GetOrders } from "../services/orderService";
-import Cookie from "js-cookie";
+import axios from "axios";
+import { API_URL } from "../constants";
+import { useState, useEffect, useCallback } from "react";
 import {
   Typography,
   Button,
@@ -19,21 +19,17 @@ import {
   TableRow,
   Paper 
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
-
-function AdminProduct() {
+function AdminPage() {
   const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  // const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchProducts();
-    // fetchOrders();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const response = await GetProducts();
       setProducts(response.data);
@@ -43,22 +39,24 @@ function AdminProduct() {
         error
       );
     }
-  };
+  }, []);
 
-  // const fetchOrders = async () => {
-  //   try {
-
-  //     const response = await GetOrders();
-  //     setOrders(response.data);
-  //   } catch (error) {
-  //     console.error(
-  //       "Une erreur s'est produite lors de la récupération des commandes des clients:",
-  //       error
-  //     );
-  //   }
-  // };
-
-  const isAdmin = Cookie.get("useradmin") === "true";
+  const fetchOrders = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_URL}/orders`, {
+        params: {
+          isAdmin: isAdmin,
+        },
+      });
+      setOrders(response.data);
+      console.log("Commandes des clients:", response.data);
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la récupération des commandes des clients:",
+        error
+      );
+    }
+  }, [isAdmin]);
 
   const handleClick = (productId) => {
     setSelectedProductId(productId);
@@ -92,6 +90,11 @@ function AdminProduct() {
     console.log("ID du produit:", Id);
     navigate(`/admin/products/edit/${Id}`);
   };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchOrders();
+  }, [fetchProducts, fetchOrders]);
 
   return (
     <>
@@ -177,17 +180,19 @@ function AdminProduct() {
                 <TableCell align="right">Coût</TableCell>
               </TableRow>
             </TableHead>
-            {/* <TableBody>
               {orders.map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell component="th" scope="row">{order.customerName}</TableCell>
+                  <TableCell>{order.user_id}</TableCell>
                   <TableCell align="right">{order.id}</TableCell>
-                  <TableCell align="right">{order.date}</TableCell>
-                  <TableCell align="right">{order.time}</TableCell>
+                  <TableCell align="right">
+                    {new Date(order.created_at).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell align="right">
+                    {new Date(order.created_at).toLocaleTimeString()}
+                  </TableCell>
                   <TableCell align="right">{order.total_price}</TableCell>
                 </TableRow>
               ))}
-            </TableBody> */}
           </Table>
         </TableContainer>
         <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
@@ -205,4 +210,4 @@ function AdminProduct() {
   );
 }
 
-export default AdminProduct;
+export default AdminPage;
