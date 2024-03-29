@@ -4,7 +4,7 @@ import axios from "axios";
 import { Button, Typography, Card, CardContent, CardMedia, Grid } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
 import { AddProductToCart } from "../services/cartServices";
-
+import { API_URL_PRODUCTS, API_URL } from "../constants";
 const ShowProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -12,7 +12,7 @@ const ShowProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/products/${id}`);
+        const response = await axios.get(`${API_URL_PRODUCTS}/${id}`);
         setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -33,7 +33,7 @@ const ShowProduct = () => {
               <CardMedia
                 component="img"
                 height="100%"
-                image={`http://localhost:3000/${product.img_url}`}
+                image={`${API_URL}/${product.img_url}`}
                 alt={product.name}
               />
             </Card>

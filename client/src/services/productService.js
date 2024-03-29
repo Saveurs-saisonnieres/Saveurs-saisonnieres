@@ -23,6 +23,7 @@ export async function AddProductfetch(productData) {
   formData.append("origin", productData.origin);
   formData.append("variety", productData.variety);
   formData.append("image", productData.image);
+  formData.append("categorie", productData.categorie);
   formData.append("isAdmin", productData.isAdmin);
 
   try {
@@ -40,6 +41,7 @@ export async function AddProductfetch(productData) {
         description: productData.description,
         origin: productData.origin,
         variety: productData.variety,
+        categorie: productData.categorie,
       },
     });
 

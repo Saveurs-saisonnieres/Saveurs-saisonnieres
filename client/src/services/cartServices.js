@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL_CART } from "../constants";
+import { API_URL_CART,API_URL } from "../constants";
 import Cookie from "js-cookie";
 export async function GetCart() {
   try {
@@ -19,7 +19,7 @@ export async function GetCart() {
 }
 export async function AddProductToCart(productId) {
   try {
-    const response = await axios.post("http://localhost:3000/cart_products", {
+    const response = await axios.post(`${API_URL}/cart_products`, {
       productId: productId // Envoyer l'ID du produit dans le corps de la requête
     },
     {
@@ -39,7 +39,7 @@ export async function AddProductToCart(productId) {
 export async function RemoveFromCart(productId) {
   try {
     const response = await axios.delete(
-      `http://localhost:3000/cart_products/${productId}`, {
+      `${API_URL}/cart_products/${productId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: Cookie.get("token")

@@ -1,9 +1,9 @@
-import { API_URL } from "../constants";
+import { API_URL_USERS } from "../constants";
 import axios from "axios";
 
 async function RegisterFetch(email, password, firstName, lastName) {
   try {
-    const response = await axios.post(API_URL, {
+    const response = await axios.post(API_URL_USERS, {
       user: {
         email: email,
         password: password,
@@ -22,7 +22,7 @@ async function RegisterFetch(email, password, firstName, lastName) {
 
 async function LoginFetch(email, password) {
   try {
-    const response = await axios.post(`${API_URL}/sign_in`, {
+    const response = await axios.post(`${API_URL_USERS}/sign_in`, {
       user: {
         email: email,
         password: password
@@ -37,7 +37,7 @@ async function LoginFetch(email, password) {
 
 async function LogoutFetch() {
   try {
-    const response = await axios.delete(`${API_URL}/sign_out`);
+    const response = await axios.delete(`${API_URL_USERS}/sign_out`);
     return response.data;
   } catch (error) {
     throw new Error('Failed to log out: ' + error.message);
@@ -46,7 +46,7 @@ async function LogoutFetch() {
 
 async function EditPasswordFetch(password, confirmPassword, resetPasswordToken) {
   try {
-    const response = await axios.patch(`${API_URL}/password`, {
+    const response = await axios.patch(`${API_URL_USERS}/password`, {
       user: {
         reset_password_token: resetPasswordToken,
         password: password,
@@ -60,7 +60,7 @@ async function EditPasswordFetch(password, confirmPassword, resetPasswordToken) 
 }
 async function ResetPasswordFetch(email) {
   try {
-    const response = await axios.post(`${API_URL}/password`, { 
+    const response = await axios.post(`${API_URL_USERS}/password`, { 
       user: { 
         email: email 
       }
