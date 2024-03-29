@@ -97,8 +97,6 @@ GEM
     devise-jwt (0.11.0)
       devise (~> 4.0)
       warden-jwt_auth (~> 0.8)
-    dockerfile-rails (1.6.7)
-      rails (>= 3.0.0)
     dotenv (3.1.0)
     dotenv-rails (3.1.0)
       dotenv (= 3.1.0)
@@ -233,7 +231,6 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
-  dockerfile-rails (>= 1.6)
   dotenv-rails
   faker
   pg (~> 1.1)
