@@ -19,6 +19,9 @@ import NotFoundPage from "../pages/NotFoundPage";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import UserPage from "../pages/UserPage";
+import CguCgv from "../pages/CguCgv";
+import LegalNotice from "../pages/LegalNotice";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 function AppRoutes() {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const [hideNav, setHideNav] = useState(false);
@@ -75,6 +78,9 @@ function AppRoutes() {
         <Route path="/payment/success" element={<SuccessPayment />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/profil" element={<UserPage />} />
+        <Route path="/cgu-cgv" element={<CguCgv />} />
+        <Route path="/legal-notice" element={<LegalNotice />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
       {!hideFooter && <Footer />}
     </>

@@ -10,7 +10,7 @@ function NavBar() {
   const { token, isAdmin } = useSelector((state) => state.auth);
 
   return (
-    <div style={{ marginTop: 50 }}>
+    <div style={{ marginTop: 20 }}>
       <AppBar position="static">
         <Toolbar sx={{ alignItems: 'center', mt: 5 }}>
           <div style={{ marginRight: 'auto', display: 'flex', alignItems: 'center' }}>
