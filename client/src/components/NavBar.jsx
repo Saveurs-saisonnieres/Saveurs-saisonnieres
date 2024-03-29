@@ -15,11 +15,13 @@ function NavBar() {
         <Toolbar sx={{ alignItems: 'center', mt: 5 }}>
           <div style={{ marginRight: 'auto', display: 'flex', alignItems: 'center' }}>
             <LogoHome />
-            <div style={{ marginLeft: 230 }}>
-              <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2, paddingBottom: 4, color: 'white' }}>Légumes</Button>
-              <Button component={Link} to="/fruits" color="inherit" sx={{ paddingBottom: 4, color: 'white'}}>Fruits</Button>
-            </div>
           </div>
+            <div style={{ marginRight: 'auto'}}>
+              <Button component={Link} to="/products" color="inherit" sx={{ marginRight: 2,  color: 'white' }}>Produits</Button>
+              <Button component={Link} to="/legumes" color="inherit" sx={{ marginRight: 2,  color: 'white' }}>Légumes</Button>
+              <Button component={Link} to="/fruits" color="inherit" sx={{  color: 'white'}}>Fruits</Button>
+              <Button component={Link} to="/paniers" color="inherit" sx={{ marginRight: 2,  color: 'white' }}>Paniers</Button>
+            </div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {token && (
               <>

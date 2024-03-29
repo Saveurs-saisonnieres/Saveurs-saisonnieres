@@ -24,7 +24,9 @@ const LegumePage = () => {
       try {
         const response = await axios.get(`${API_URL}/products?categorie=Legumes`);
         console.log(response.data);
-        setLegumeProducts(response.data);
+        const legumeProducts = response.data.filter(product => product.categorie === "Légumes");
+        console.log(legumeProducts);
+        setLegumeProducts(legumeProducts);
       } catch (error) {
         console.error("Error fetching legume products:", error);
       }

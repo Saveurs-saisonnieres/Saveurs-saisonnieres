@@ -22,6 +22,7 @@ import UserPage from "../pages/UserPage";
 import CguCgv from "../pages/CguCgv";
 import LegalNotice from "../pages/LegalNotice";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
+import PanierPage from "../pages/PaniersPage";
 function AppRoutes() {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const [hideNav, setHideNav] = useState(false);
@@ -75,6 +76,7 @@ function AppRoutes() {
         )}
         <Route path="/legumes" element={<LegumesPage />} />
         <Route path="/fruits" element={<FruitsPage />} />
+        <Route path="/paniers" element={<PanierPage />} />
         <Route path="/payment/success" element={<SuccessPayment />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/profil" element={<UserPage />} />
