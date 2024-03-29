@@ -1,24 +1,16 @@
-# README
+# Ruby On Rails + PostgreSQL
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Make sure you have Ruby and Rails, installed on your system.
 
-Things you may want to cover:
+## Version
+* Ruby version: 3.2.2
+* Rails version: 7.1.3.2
 
-* Ruby version
 
-* System dependencies
+## Configuration
+* Configure the PostgreSQL database in the ```database.yml``` file.
+* In the ```serveur``` folder, execute ```bundle install``` to install necessary gems.
+* Create and migrate the database by running  ```rails db:create``` and ```rails db:migrate```.
+* Start the backend server by running ```rails server```.
+* The application runs by default on the localhost URL http://localhost:3000.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
