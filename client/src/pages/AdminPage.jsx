@@ -1,8 +1,9 @@
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetProducts, DeleteProductfetch } from "../services/productService";
 import axios from "axios";
 import { API_URL } from "../constants";
-import { useState, useEffect, useCallback } from "react";
+
 import {
   Typography,
   Button,
@@ -17,7 +18,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper 
+  Paper,
+  TablePagination 
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -26,6 +28,8 @@ function AdminPage() {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [page, setPage] = useState(0); 
+  const [rowsPerPage, setRowsPerPage] = useState(10); 
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const navigate = useNavigate();
 
@@ -46,6 +50,8 @@ function AdminPage() {
       const response = await axios.get(`${API_URL}/orders`, {
         params: {
           isAdmin: isAdmin,
+          page: page + 1, 
+          perPage: rowsPerPage, 
         },
       });
       setOrders(response.data);
@@ -56,7 +62,7 @@ function AdminPage() {
         error
       );
     }
-  }, [isAdmin]);
+  }, [isAdmin, page, rowsPerPage]);
 
   const handleClick = (productId) => {
     setSelectedProductId(productId);
@@ -96,16 +102,46 @@ function AdminPage() {
     fetchOrders();
   }, [fetchProducts, fetchOrders]);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <>
-      <Box sx={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 20, marginTop: 5 }}>
+      <Box
+        sx={{
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 20,
+          paddingRight: 20,
+          marginTop: 5,
+        }}
+      >
         <Typography variant="h5" gutterBottom>
           Liste des produits :
         </Typography>
-        <Button variant="contained" onClick={fetchProducts} sx={{ marginRight: 1, marginBottom: 2, backgroundColor: '#', '&:hover': { backgroundColor: '#E5E5E5' }}}>
+        <Button
+          variant="contained"
+          onClick={fetchProducts}
+          sx={{
+            marginRight: 1,
+            marginBottom: 2,
+            backgroundColor: "#",
+            "&:hover": { backgroundColor: "#E5E5E5" },
+          }}
+        >
           Rafraîchir
         </Button>
-        <Button variant="contained" onClick={navigateToAddProduct} sx={{ marginRight: 1, marginBottom: 2 }}>
+        <Button
+          variant="contained"
+          onClick={navigateToAddProduct}
+          sx={{ marginRight: 1, marginBottom: 2 }}
+        >
           Ajouter un produit
         </Button>
         <TableContainer component={Paper}>
@@ -162,27 +198,33 @@ function AdminPage() {
         </Dialog>
       </Box>
 
-      <Box sx={{ paddingBottom: 10, paddingLeft: 20, paddingRight: 120, marginTop: 5 }}>
+      <Box
+        sx={{
+          paddingBottom: 10,
+          paddingLeft: 20,
+          paddingRight: 120,
+          marginTop: 5,
+        }}
+      >
         <Typography variant="h5" gutterBottom>
           Commandes :
         </Typography>
-        <Button variant="contained"  sx={{ marginRight: 1, marginBottom: 2 }}>
+        <Button variant="contained" sx={{ marginRight: 1, marginBottom: 2 }}>
           Rafraîchir
         </Button>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Nom client</TableCell>
                 <TableCell align="right">Numéro de commande</TableCell>
                 <TableCell align="right">Date</TableCell>
                 <TableCell align="right">Heure</TableCell>
                 <TableCell align="right">Coût</TableCell>
               </TableRow>
             </TableHead>
+            <TableBody>
               {orders.map((order) => (
                 <TableRow key={order.id}>
-                  <TableCell>{order.user_id}</TableCell>
                   <TableCell align="right">{order.id}</TableCell>
                   <TableCell align="right">
                     {new Date(order.created_at).toLocaleDateString()}
@@ -193,8 +235,18 @@ function AdminPage() {
                   <TableCell align="right">{order.total_price}</TableCell>
                 </TableRow>
               ))}
+            </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={orders.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
         <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
           <DialogTitle>Confirmer la suppression</DialogTitle>
           <DialogContent>
