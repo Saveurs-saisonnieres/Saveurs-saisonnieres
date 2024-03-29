@@ -33,7 +33,7 @@ Seasonal Flavors is a web application that allows users to order their fruits, v
 
 ## Configuration 
 * Make sure you have Ruby, Rails, and Node.js installed on your system.
-
+* Clone this repository to your local machine ```git clone https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres```.
 * [Frontend Instructions ](https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres/blob/main/client/README.md)
 * [Backend Instructions ](https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres/blob/main/serveur/README.md)
   
@@ -44,7 +44,5 @@ This project was developed by the following contributors:
 * [Grégory](https://github.com/GregMagnat)
 * [Louis](https://github.com/LouisKzy)
 
-* Clone this repository to your local machine ```git clone https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres```.
 
-* [Frontend Instructions ](https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres/blob/main/client/README.md)
-* [Backend Instructions ](https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres/blob/main/serveur/README.md)
+
