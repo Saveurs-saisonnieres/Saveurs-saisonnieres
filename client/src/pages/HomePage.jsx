@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import welcomeImage from '../assets/images/welcomeF.svg';
@@ -49,7 +48,7 @@ function HomePage() {
                 Se connecter
               </Button>
             </Link>
-            <Link to="/Register">
+            <Link to="/register">
               <Button
                 type="submit"
                 fullWidth
@@ -62,7 +61,7 @@ function HomePage() {
                   ...buttonTextStyle, 
                 }}
               >
-                S'inscrire
+                S&apos;inscrire
               </Button>
             </Link>
           </div>
