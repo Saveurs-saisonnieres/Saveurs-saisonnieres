@@ -1,6 +1,6 @@
 # Saveurs Saisonnières
+![Capture d'écran 2024-03-29 201135](https://github.com/Saveurs-saisonnieres/Saveurs-saisonnieres/assets/146070864/e6c68dbe-6489-454a-b0b1-a81b133b9f5a)
 
-/home/spooker/projet-html-css/THP/dev++/semaine_11_et_12/Saveurs-saisonnieres/client/src/assets/images/LogoLog.svg
 
 Seasonal Flavors is a web application that allows users to order their fruits, vegetables, and gift baskets online for pickup at the store.
 
