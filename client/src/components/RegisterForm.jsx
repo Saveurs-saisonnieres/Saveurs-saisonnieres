@@ -11,7 +11,7 @@ import Logo from '../assets/images/LogoLog.svg';
 import Fonlog from '../assets/images/FonLog.jpg';
 import { RegisterFetch } from '../services/authService';
 import { useRef } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -21,7 +21,7 @@ export default function RegisterForm() {
   const confirmPasswordRef = useRef('');
   const firstNameRef = useRef('');
   const lastNameRef = useRef('');
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
@@ -41,7 +41,7 @@ export default function RegisterForm() {
     try {
       const data = await RegisterFetch(email, password, firstName, lastName);
       console.log(data);
-      window.location.href = '/login';
+      navigate('/login');
     } catch (error) {
       alert('Failed to register: ' + error.message);
     }
