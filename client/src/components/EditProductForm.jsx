@@ -58,7 +58,7 @@ const EditProductForm = () => {
     try {
       await EditProductfetch(productId, productData, isAdmin);
       console.log("Produit mis à jour avec succès.");
-      navigate("/admin/products");
+      navigate("/admin/page");
     } catch (error) {
       console.error("Erreur lors de la mise à jour du produit :", error);
       console.log(productData);
