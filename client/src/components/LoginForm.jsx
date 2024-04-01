@@ -28,7 +28,7 @@ export default function LoginForm() {
       if (user.admin) {
         Cookies.set("useradmin", user.admin);
         console.log("Successfully logged in as admin: ", data.message);
-        window.location.href = "/admin/products";
+        window.location.href = "/admin/page";
         dispatch(login({ token: token, isAdmin: true }));
       } else {
         dispatch(login({ token: token, isAdmin: false }));

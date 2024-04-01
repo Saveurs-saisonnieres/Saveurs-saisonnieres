@@ -24,16 +24,16 @@ export default function ResetPasswordForm() {
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <FormControl>
-        <Typography>Email address</Typography>
+        <Typography>Votre adresse e-mail :</Typography>
         <TextField
           type="email"
-          placeholder="Enter email"
+          placeholder="Email"
           inputRef={emailRef}
         />
       </FormControl>
 
       <Button variant="contained" type="submit">
-        Reset Password
+        Envoyez-moi les instructions
       </Button>
     </Box>
   )
