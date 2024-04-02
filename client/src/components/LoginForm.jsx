@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { LoginFetch } from "../services/authService";
 import { login } from "../features/authSlice";
 import Cookies from "js-cookie";
 import Logo from "../assets/images/LogoLog.svg";
 import Fonregister from "../assets/images/Fonregister.jpg";
-import { Grid, Paper, Box, Typography, TextField, FormControlLabel, Checkbox, Button, Link } from "@mui/material";
+import { Grid, Paper, Box, Typography, TextField, FormControlLabel, Checkbox, Button, Link, Alert } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -13,6 +13,7 @@ export default function LoginForm() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +38,7 @@ export default function LoginForm() {
       }
     } catch (error) {
       console.error("Failed to login:", error.message);
+      setError("Adresse e-mail ou mot de passe incorrect.");
     }
   };
 
@@ -78,6 +80,7 @@ export default function LoginForm() {
             <Typography component="h1" variant="h5">
               Connexion
             </Typography>
+            {error && <Alert severity="error">{error}</Alert>}
             <Box
               component="form"
               noValidate
@@ -125,7 +128,7 @@ export default function LoginForm() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="password/reset" variant="body2">
                     Mot de passe oublié ?
                   </Link>
                 </Grid>
