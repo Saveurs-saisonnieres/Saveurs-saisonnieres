@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
   def welcome_email(user)
     @user = user 
 
-   @url  = 'http://127.0.0.1:3000/' 
+    @url  = 'https://saveurs-saisonnieres.vercel.app/login' 
 
     mail(to: @user.email, subject: 'Bienvenue chez Saveurs Saisonnières !') 
   end

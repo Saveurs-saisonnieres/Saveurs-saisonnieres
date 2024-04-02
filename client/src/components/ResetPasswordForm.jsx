@@ -1,14 +1,14 @@
+import { useRef, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { useRef } from 'react';
 import { ResetPasswordFetch } from '../services/authService';
 
 export default function ResetPasswordForm() {
-  const emailRef = useRef('');
+  const emailRef = useRef(null); // Référence correctement initialisée
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,25 +16,51 @@ export default function ResetPasswordForm() {
     try {
       const response = await ResetPasswordFetch(email);
       console.log(response.data);
+      setMessage('Un e-mail de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.');
     } catch (error) {
       console.error('Failed to reset password:', error.message);
+      setMessage('Une erreur est survenue lors de la réinitialisation du mot de passe.');
     }
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <FormControl>
-        <Typography>Email address</Typography>
-        <TextField
-          type="email"
-          placeholder="Enter email"
-          inputRef={emailRef}
-        />
-      </FormControl>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center', 
+        height: '70vh', 
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          maxWidth: 400,
+          padding: 3,
+          borderRadius: 8,
+          backgroundColor: '#fff',
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+          Réinitialiser le mot de passe
+        </Typography>
+        <FormControl sx={{ width: '100%', mb: 2 }}>
+          <TextField
+            type="email"
+            label="Adresse email"
+            variant="outlined"
+            inputRef={emailRef}
+            required
+          />
+        </FormControl>
 
-      <Button variant="contained" type="submit">
-        Reset Password
-      </Button>
-    </Box>
-  )
+        <Button variant="contained" type="submit" sx={{ width: '100%', mt: 2 }}>
+          Réinitialiser le mot de passe
+        </Button>
+        {message && <Typography variant="body1" sx={{ mt: 2 }}>{message}</Typography>}
+      </form>
+    </div>
+  );
 }

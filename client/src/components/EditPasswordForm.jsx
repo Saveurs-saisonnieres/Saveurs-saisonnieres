@@ -36,23 +36,23 @@ export default function EditPasswordForm() {
 
   return (
     <>
-      <Typography variant="h3" gutterBottom>Edit Password</Typography>
+      <Typography variant="h3" gutterBottom>Changez votre mot de passe</Typography>
       <Box component="form" onSubmit={handleSubmit}>
         <FormControl>
           <TextField
             type="password"
-            placeholder="New password"
+            placeholder="Nouveau mot de passe"
             inputRef={passwordRef}
           />
           <TextField
             type="password"
-            placeholder="Confirm your new password"
+            placeholder="Confirmez le nouveau mot de passe"
             inputRef={confirmPasswordRef}
           />
         </FormControl>
 
         <Button variant="contained" type="submit">
-          Reset Password
+          Enregistrer les changements
         </Button>
       </Box>
     </>

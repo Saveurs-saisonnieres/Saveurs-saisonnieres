@@ -1,6 +1,9 @@
 # Ruby On Rails + PostgreSQL
 
 ### Make sure you have Ruby and Rails, installed on your system.
+To use all the features you will need a MailJet acount, Stripe account and an AWS account with S3
+
+Don't forget to save all your keys in an .env file
 
 ## Version
 * Ruby version: 3.2.2
