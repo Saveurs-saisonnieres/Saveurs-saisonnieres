@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
     }
 
-  resources :users, only: [:show, :update] do
+  resources :users, only: [:show, :update, :destroy] do
     get 'edit', on: :member
     get 'member-data', on: :collection, to: 'members#show'
   end
