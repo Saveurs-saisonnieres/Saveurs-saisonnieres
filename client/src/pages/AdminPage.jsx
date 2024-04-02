@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetProducts, DeleteProductfetch } from "../services/productService";
 import axios from "axios";
@@ -19,73 +19,67 @@ import {
   TableHead,
   TableRow,
   Paper,
-  TablePagination 
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
 function AdminPage() {
-  const [products, setProducts] = useState([]);
-  const [selectedProductId, setSelectedProductId] = useState(null);
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [orders, setOrders] = useState([]);
-  const [page, setPage] = useState(0); 
-  const [rowsPerPage, setRowsPerPage] = useState(10); 
+  const [state, setState] = useState({
+    products: [],
+    selectedProductId: null,
+    isConfirmationOpen: false,
+    orders: [],
+  });
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const navigate = useNavigate();
 
-  const fetchProducts = useCallback(async () => {
+  // Fetch products
+  const fetchProducts = async () => {
     try {
       const response = await GetProducts();
-      setProducts(response.data);
+      setState((prevState) => ({
+        ...prevState,
+        products: response.data,
+      }));
     } catch (error) {
-      console.error(
-        "Une erreur s'est produite lors de la récupération des produits:",
-        error
-      );
+      console.error("Erreur lors de la récupération des produits:", error);
     }
-  }, []);
+  };
 
-  const fetchOrders = useCallback(async () => {
-    try {
-      const response = await axios.get(`${API_URL}/orders`, {
-        params: {
-          isAdmin: isAdmin,
-          page: page + 1, 
-          perPage: rowsPerPage, 
-        },
-      });
-      setOrders(response.data);
-      console.log("Commandes des clients:", response.data);
-    } catch (error) {
-      console.error(
-        "Une erreur s'est produite lors de la récupération des commandes des clients:",
-        error
-      );
-    }
-  }, [isAdmin, page, rowsPerPage]);
-
+  // Handlers
   const handleClick = (productId) => {
-    setSelectedProductId(productId);
-    setIsConfirmationOpen(true);
+    setState((prevState) => ({
+      ...prevState,
+      selectedProductId: productId,
+      isConfirmationOpen: true,
+    }));
   };
 
   const handleDeleteConfirmed = async () => {
     try {
-      await DeleteProductfetch(selectedProductId, isAdmin);
+      await DeleteProductfetch(state.selectedProductId, isAdmin);
       const updatedProducts = await GetProducts();
-      setProducts(updatedProducts.data);
+      setState((prevState) => ({
+        ...prevState,
+        products: updatedProducts.data,
+        isConfirmationOpen: false,
+      }));
       console.log("Produit supprimé avec succès");
     } catch (error) {
       console.error("Échec de la suppression du produit :", error.message);
     } finally {
-      setSelectedProductId(null);
-      setIsConfirmationOpen(false);
+      setState((prevState) => ({
+        ...prevState,
+        selectedProductId: null,
+      }));
     }
   };
 
   const handleCancelDelete = () => {
-    setSelectedProductId(null);
-    setIsConfirmationOpen(false);
+    setState((prevState) => ({
+      ...prevState,
+      selectedProductId: null,
+      isConfirmationOpen: false,
+    }));
   };
 
   const navigateToAddProduct = () => {
@@ -97,19 +91,31 @@ function AdminPage() {
     navigate(`/admin/products/edit/${Id}`);
   };
 
+  // Effects
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/orders`, {
+          params: {
+            isAdmin: isAdmin,
+          },
+        });
+        setState((prevState) => ({
+          ...prevState,
+          orders: response.data,
+        }));
+        console.log("Commandes des clients:", response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des commandes des clients:",
+          error
+        );
+      }
+    };
+
     fetchProducts();
     fetchOrders();
-  }, [fetchProducts, fetchOrders]);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  }, [isAdmin]);
 
   return (
     <>
@@ -157,7 +163,7 @@ function AdminPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {products.map((product) => (
+              {state.products.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell component="th" scope="row">
                     {product.name}
@@ -186,7 +192,7 @@ function AdminPage() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
+        <Dialog open={state.isConfirmationOpen} onClose={handleCancelDelete}>
           <DialogTitle>Confirmer la suppression</DialogTitle>
           <DialogContent>
             Êtes-vous sûr de vouloir supprimer ce produit ?
@@ -212,7 +218,7 @@ function AdminPage() {
         <Button variant="contained" sx={{ marginRight: 1, marginBottom: 2 }}>
           Rafraîchir
         </Button>
-        <TableContainer component={Paper}>
+        <TableContainer sx={{ minWidth: 650 }} component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -223,7 +229,7 @@ function AdminPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
+              {state.orders.map((order) => (
                 <TableRow key={order.id}>
                   <TableCell align="right">{order.id}</TableCell>
                   <TableCell align="right">
@@ -238,16 +244,7 @@ function AdminPage() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={orders.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-        <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
+        <Dialog open={state.isConfirmationOpen} onClose={handleCancelDelete}>
           <DialogTitle>Confirmer la suppression</DialogTitle>
           <DialogContent>
             Êtes-vous sûr de vouloir supprimer cette commande ?
