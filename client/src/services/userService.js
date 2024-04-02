@@ -33,13 +33,19 @@ async function UpdateUser(userId, userData) {
 
 async function DeleteUser(userId) {
   try {
-    const response = await axios.delete(API_URL_USERS + `${userId}`);
-    return response.data;
+    const response = await axios.delete(API_URL_USERS + `/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Cookie.get("token"),
+      },
+    });
+    return response;
   } catch (error) {
     throw new Error(
-      "Échec de la suppression de l'utilisateur : " + error.message
+      "Échec de la récupération de l'utilisateur : " + error.message
     );
   }
 }
+
 
 export { ShowUser, UpdateUser, DeleteUser };

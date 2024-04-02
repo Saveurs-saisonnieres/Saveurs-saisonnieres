@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField } from "@mui/material";
 import { ShowUser } from "../services/userService";
 import { format } from 'date-fns';
-
+import { DeleteUser } from "../services/userService";
+import { useDispatch } from "react-redux"
+import { logout } from "../features/authSlice";
 function UserPage() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -20,6 +22,19 @@ function UserPage() {
 
     fetchUser();
   }, []);
+
+  const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer votre compte ?");
+    if (confirmDelete) {
+      try {
+        await DeleteUser(userId);
+        dispatch(logout());
+        window.location.href = "/";
+      } catch (error) {
+        setError("Échec de la suppression de l'utilisateur : " + error.message);
+      }
+    }
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -62,7 +77,8 @@ function UserPage() {
             margin="normal"
             variant="outlined"
           />
-          <Button variant="outlined" color="primary" sx={{ mt: 1 }}>Modifier</Button>
+          <Button variant="outlined" color="primary" sx={{ mt: 1, mr: 1 }}>Modifier</Button>
+          <Button variant="outlined" color="error" onClick={() => handleDeleteUser(user.id)} sx={{ mt: 1}}>Suppression du compte</Button>
         </div>
       )}
       <Typography variant="h3" component="h3" gutterBottom sx={{ mt: 3 }}>
@@ -101,4 +117,3 @@ function UserPage() {
 }
 
 export default UserPage;
-
