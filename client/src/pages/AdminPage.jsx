@@ -28,8 +28,6 @@ function AdminPage() {
     selectedProductId: null,
     isConfirmationOpen: false,
     orders: [],
-    page: 0,
-    rowsPerPage: 10,
   });
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const navigate = useNavigate();
